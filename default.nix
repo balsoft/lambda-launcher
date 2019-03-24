@@ -32,6 +32,4 @@ let
 
   drv = variant (haskellPackages.callPackage f {});
 
-in
-
-  if pkgs.lib.inNixShell then drv.env else drv
+in drv

@@ -16,9 +16,9 @@ import Control.Monad (filterM)
 
 command :: String -> IO [Result]
 command s = do
-  path <- splitSearchPath <$> getEnv "PATH"
-  pathExists <- filterM (doesDirectoryExist) path
-  executables <- concat <$> (sequence $ listDirectory <$> pathExists)
+  executables <-
+    fmap mconcat <$> mapM listDirectory =<<
+    filterM doesDirectoryExist =<< splitSearchPath <$> getEnv "PATH"
   let suitable =
         filter (\x -> (s `isInfixOf` x) || (x `isPrefixOf` s)) executables
   return $
