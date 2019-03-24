@@ -29,6 +29,7 @@ executable lambda-launcher
                       , Plugins.Qalc
                       , Plugins.Sway
                       , Plugins.Files
+                      , Plugins.Google
   default-language:     Haskell2010
   ghc-options:          -threaded
                         

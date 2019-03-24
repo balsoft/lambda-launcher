@@ -4,8 +4,6 @@ import Types
 
 import System.Process (callProcess)
 
-import Data.List (isPrefixOf)
-
 copyAction :: String -> Result
 copyAction s = Action s $ callProcess "wl-copy" [s]
 

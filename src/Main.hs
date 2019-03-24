@@ -23,6 +23,9 @@ import GI.Gtk
   , SearchEntry(..)
   , Window(..)
   , WindowPosition(..)
+  , ScrolledWindow (..)
+  , PolicyType (..)
+  , WindowType (..)
   , getEntryText
   )
 import qualified GI.Gtk as Gtk
@@ -44,6 +47,12 @@ data State = State
   , results :: [Result]
   }
 
+cutOffAt :: String -> Int -> String
+s `cutOffAt` i
+  = if length s < i
+    then s
+    else (take (i - 3) s) ++ "..."
+
 searchView :: State -> AppView Window Event
 searchView State {results} =
   bin
@@ -51,13 +60,19 @@ searchView State {results} =
     [ #title := "λauncher"
     , on #deleteEvent (const (True, Closed))
     , #widthRequest := 500
-    , #heightRequest := 35
+    , #heightRequest := 300
     , #resizable := False
     , #canFocus := False
     , #windowPosition := WindowPositionCenterAlways
     ] $
-  container Box [#orientation := OrientationVertical] $
-  searchEntry `Vector.cons` buildResults results
+    bin
+    ScrolledWindow
+    [ #hscrollbarPolicy := PolicyTypeNever
+    , #vscrollbarPolicy := PolicyTypeAlways
+    ]
+    $
+    container Box [#orientation := OrientationVertical] $
+    searchEntry `Vector.cons` buildResults results
   where
     searchEntry =
       BoxChild defaultBoxChildProperties $
@@ -74,7 +89,7 @@ searchView State {results} =
       Vector.fromList $
       map
         (\(Action r a) ->
-           widget Button [#label := Text.pack r, on #clicked $ Activated a])
+           widget Button [#label := (Text.pack $ r `cutOffAt` 40), on #clicked $ Activated a])
         res
     toQueryChangedEvent :: SearchEntry -> IO Event
     toQueryChangedEvent w = QueryChanged <$> Text.unpack <$> getEntryText w
@@ -83,7 +98,7 @@ update' :: State -> Event -> Transition State Event
 update' state (QueryChanged s) =
   Transition state {query = s} $
   Just <$> ResultsChanged <$> concat <$> fmap concat <$>
-  (sequence $ optional <$> ($ s) <$> plugins)
+  (traverse optional $ ($ s) <$> plugins)
 update' state (ResultsChanged xs) =
   Transition state {results = xs} $ return Nothing
 update' state (Activated a) =
