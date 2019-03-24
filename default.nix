@@ -5,9 +5,9 @@ let
   inherit (nixpkgs) pkgs;
 
   f = { mkDerivation, aeson, async, base, bytestring, directory
-      , gi-gdk, gi-glib, gi-gobject, gi-gtk, gi-gtk-declarative
+      , filepath, gi-gdk, gi-glib, gi-gobject, gi-gtk, gi-gtk-declarative
       , gi-gtk-declarative-app-simple, haskell-gi, haskell-gi-base
-      , process, stdenv, text, vector
+      , process, req, stdenv, text, vector
       }:
       mkDerivation {
         pname = "lambda-launcher";
@@ -16,9 +16,9 @@ let
         isLibrary = false;
         isExecutable = true;
         executableHaskellDepends = [
-          aeson async base bytestring directory gi-gdk gi-glib gi-gobject
-          gi-gtk gi-gtk-declarative gi-gtk-declarative-app-simple haskell-gi
-          haskell-gi-base process text vector
+          aeson async base bytestring directory filepath gi-gdk gi-glib
+          gi-gobject gi-gtk gi-gtk-declarative gi-gtk-declarative-app-simple
+          haskell-gi haskell-gi-base process req text vector
         ];
         license = "unknown";
         hydraPlatforms = stdenv.lib.platforms.none;
@@ -32,4 +32,6 @@ let
 
   drv = variant (haskellPackages.callPackage f {});
 
-in drv
+in
+
+  if pkgs.lib.inNixShell then drv.env else drv

@@ -6,6 +6,7 @@ import System.Environment (getEnv)
 import System.Process (callCommand)
 import Types
 
+projectsDir :: IO FilePath
 projectsDir = (++ "/projects/") <$> getEnv "HOME"
 
 emacsOpenAction :: String -> Result

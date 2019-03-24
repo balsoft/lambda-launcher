@@ -22,6 +22,8 @@ executable lambda-launcher
                       , vector
                       , aeson
                       , filepath
+                      , req
+                      , data-default-class
   hs-source-dirs:       src
   other-modules:        Types
                       , Plugins.Main 
@@ -32,6 +34,7 @@ executable lambda-launcher
                       , Plugins.Google
                       , Plugins.Command
                       , Plugins.Emacs
+                      , Plugins.Wiki
   default-language:     Haskell2010
   ghc-options:          -threaded
                         

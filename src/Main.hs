@@ -32,6 +32,8 @@ import qualified GI.Gtk as Gtk
 import GI.Gtk.Declarative
 import GI.Gtk.Declarative.App.Simple
 
+import Control.Concurrent.Async (mapConcurrently)
+
 import Types
 
 import Plugins.Main
@@ -90,7 +92,7 @@ searchView State {results} =
         (\(Action r a) ->
            widget
              Button
-             [ #label := (Text.pack $ r `cutOffAt` 40)
+             [ #label := (Text.pack $ r `cutOffAt` 60)
              , on #clicked $ Activated a
              ])
         res
@@ -101,7 +103,7 @@ update' :: State -> Event -> Transition State Event
 update' state (QueryChanged s) =
   Transition state {query = s} $
   Just <$> ResultsChanged <$> concat <$> fmap concat <$>
-  (traverse optional $ ($ s) <$> plugins)
+  (mapConcurrently optional $ ($ s) <$> plugins)
 update' state (ResultsChanged xs) =
   Transition state {results = xs} $ return Nothing
 update' state (Activated a) =

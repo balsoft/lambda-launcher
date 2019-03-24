@@ -6,7 +6,8 @@ import Plugins.Files
 import Plugins.Google
 import Plugins.Qalc
 import Plugins.Sway
+import Plugins.Wiki
 import Types
 
 plugins :: [String -> IO [Result]]
-plugins = [command, google, emacs, qalc, sway, files]
+plugins = [command, google, wiki, emacs, qalc, sway, files]
