@@ -20,12 +20,12 @@ import GI.Gtk
   ( Box(..)
   , Button(..)
   , Orientation(..)
+  , PolicyType(..)
+  , ScrolledWindow(..)
   , SearchEntry(..)
   , Window(..)
   , WindowPosition(..)
-  , ScrolledWindow (..)
-  , PolicyType (..)
-  , WindowType (..)
+  , WindowType(..)
   , getEntryText
   )
 import qualified GI.Gtk as Gtk
@@ -48,8 +48,8 @@ data State = State
   }
 
 cutOffAt :: String -> Int -> String
-s `cutOffAt` i
-  = if length s < i
+s `cutOffAt` i =
+  if length s < i
     then s
     else (take (i - 3) s) ++ "..."
 
@@ -65,14 +65,13 @@ searchView State {results} =
     , #canFocus := False
     , #windowPosition := WindowPositionCenterAlways
     ] $
-    bin
+  bin
     ScrolledWindow
     [ #hscrollbarPolicy := PolicyTypeNever
     , #vscrollbarPolicy := PolicyTypeAlways
-    ]
-    $
-    container Box [#orientation := OrientationVertical] $
-    searchEntry `Vector.cons` buildResults results
+    ] $
+  container Box [#orientation := OrientationVertical] $
+  searchEntry `Vector.cons` buildResults results
   where
     searchEntry =
       BoxChild defaultBoxChildProperties $
@@ -89,7 +88,11 @@ searchView State {results} =
       Vector.fromList $
       map
         (\(Action r a) ->
-           widget Button [#label := (Text.pack $ r `cutOffAt` 40), on #clicked $ Activated a])
+           widget
+             Button
+             [ #label := (Text.pack $ r `cutOffAt` 40)
+             , on #clicked $ Activated a
+             ])
         res
     toQueryChangedEvent :: SearchEntry -> IO Event
     toQueryChangedEvent w = QueryChanged <$> Text.unpack <$> getEntryText w
