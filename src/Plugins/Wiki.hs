@@ -71,7 +71,7 @@ getWikipediaData s =
       ("srsearch") =:
       (s :: String) <>
       ("srlimit") =:
-      (2 :: Integer) <>
+      (5 :: Integer) <>
       ("format") =:
       ("json" :: String)
     liftIO $ return $ responseBody bs
@@ -82,6 +82,6 @@ wiki s = do
   let res = (\x -> (htmlToPlain $ snippet x, show $ pageid x)) <$> s
   return $
     (\(text, curid) ->
-       Action text 2 $
+       Action text 3 $
        openUrlAction $ "https://en.wikipedia.org/?curid=" ++ curid) <$>
     res
