@@ -1,5 +1,9 @@
 module Types where
 
-data Result =
-  Action String
-         (IO ())
+type Priority = Integer
+
+data Result = Action
+  { shownText :: String
+  , priority :: Priority
+  , action :: IO ()
+  }

@@ -10,4 +10,4 @@ import Plugins.Wiki
 import Types
 
 plugins :: [String -> IO [Result]]
-plugins = [command, google, wiki, emacs, qalc, sway, files]
+plugins = [google, qalc, emacs, sway, files, command, wiki]

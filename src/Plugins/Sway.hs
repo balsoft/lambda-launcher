@@ -35,7 +35,7 @@ findWindows (node) = concat (mconcat <$> map findWindows <$> nodes node)
 
 windowToResults :: Window -> Types.Result
 windowToResults (Window name app_id id pid) =
-  Action name $ callProcess "swaymsg" ["[con_id=" ++ show id ++ "] focus"]
+  Action name 4 $ callProcess "swaymsg" ["[con_id=" ++ show id ++ "] focus"]
 
 sway :: String -> IO [Types.Result]
 sway s = do

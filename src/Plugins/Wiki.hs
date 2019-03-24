@@ -5,6 +5,8 @@ module Plugins.Wiki where
 
 import Types
 
+import Plugins.Support
+
 import Control.Monad
 import Control.Monad.IO.Class
 import Data.Aeson
@@ -80,6 +82,6 @@ wiki s = do
   let res = (\x -> (htmlToPlain $ snippet x, show $ pageid x)) <$> s
   return $
     (\(text, curid) ->
-       Action text $
-       callProcess "xdg-open" ["https://en.wikipedia.org/?curid=" ++ curid]) <$>
+       Action text 2 $
+       openUrlAction $ "https://en.wikipedia.org/?curid=" ++ curid) <$>
     res

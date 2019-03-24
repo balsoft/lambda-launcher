@@ -2,13 +2,15 @@ module Plugins.Support where
 
 import Types
 
-import System.Process (callProcess)
+import System.Process (spawnProcess)
 
-copyAction :: String -> Result
-copyAction s = Action s $ callProcess "wl-copy" [s]
+copyAction :: Priority -> String -> Result
+copyAction p s =
+  Action s p $ do
+    _ <- spawnProcess "wl-copy" [s]
+    return ()
 
-noAction :: String -> Result
-noAction s = Action s $ return ()
-
-openUrlAction :: String -> Result
-openUrlAction s = Action s $ callProcess "xdg-open" [s]
+openUrlAction :: String -> IO ()
+openUrlAction s = do
+  _ <- spawnProcess "xdg-open" [s]
+  return ()

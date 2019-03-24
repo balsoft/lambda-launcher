@@ -16,6 +16,7 @@ import qualified Data.Vector as Vector
 
 import Control.Applicative (optional)
 
+import Control.Concurrent.Async (mapConcurrently)
 import GI.Gtk
   ( Box(..)
   , Button(..)
@@ -31,8 +32,9 @@ import GI.Gtk
 import qualified GI.Gtk as Gtk
 import GI.Gtk.Declarative
 import GI.Gtk.Declarative.App.Simple
+import System.IO.Unsafe (unsafeInterleaveIO)
 
-import Control.Concurrent.Async (mapConcurrently)
+import Data.List (sortOn)
 
 import Types
 
@@ -40,7 +42,9 @@ import Plugins.Main
 
 data Event
   = QueryChanged String
-  | ResultsChanged [Result]
+  | ResultAdded String
+                [Result]
+                [IO [Result]]
   | Activated (IO ())
   | Closed
 
@@ -89,7 +93,7 @@ searchView State {results} =
     buildResults res =
       Vector.fromList $
       map
-        (\(Action r a) ->
+        (\(Action r _ a) ->
            widget
              Button
              [ #label := (Text.pack $ r `cutOffAt` 60)
@@ -99,13 +103,31 @@ searchView State {results} =
     toQueryChangedEvent :: SearchEntry -> IO Event
     toQueryChangedEvent w = QueryChanged <$> Text.unpack <$> getEntryText w
 
+updateResults :: String -> [IO [Result]] -> IO (Maybe Event)
+updateResults _ [] = return Nothing
+updateResults q (result:results) = do
+  first <- unsafeInterleaveIO $ optional $ result
+  case first of
+    Nothing -> updateResults q results
+    Just f -> return $ Just $ ResultAdded q f results
+
 update' :: State -> Event -> Transition State Event
+update' state (QueryChanged "") =
+  Transition state {query = "", results = []} $ return Nothing
 update' state (QueryChanged s) =
-  Transition state {query = s} $
-  Just <$> ResultsChanged <$> concat <$> fmap concat <$>
-  (mapConcurrently optional $ ($ s) <$> plugins)
-update' state (ResultsChanged xs) =
-  Transition state {results = xs} $ return Nothing
+  Transition state {query = s, results = []} $
+  updateResults s $ ($ s) <$> plugins
+update' state (ResultAdded q x xs) =
+  Transition
+    state
+      { results =
+          if q == query state
+            then sortOn priority $ (results state) ++ x
+            else results state
+      } $
+  if q == query state
+    then updateResults q xs
+    else return Nothing
 update' state (Activated a) =
   Transition state $ do
     a
