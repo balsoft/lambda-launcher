@@ -2,7 +2,7 @@ module Plugins.Command where
 
 import Types
 
-import System.Process (spawnCommand)
+import System.Process (callCommand)
 
 import System.Environment (getEnv)
 
@@ -25,5 +25,5 @@ command s = do
     map
       (\x ->
          Action ("Run command " ++ max x s) 1 $
-         seq (spawnCommand $ max s x) (return ())) $
+         seq (callCommand $ max s x) (return ())) $
     take 3 $ suitable
