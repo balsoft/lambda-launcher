@@ -3,9 +3,26 @@
 λauncher is a GTK launcher application built with Haskell and 
 gtk-gi-declarative.
 
+## Features
+
+ -  Asynchronous plugin result loading
+ -  No runtime settings (not a bug, but a feature)
+ -  4k memory on coldstart, 15k memory when all plugins are loaded
+ -  Very quick startup (compared to some other graphical launchers
+
 ## Building
 ### Nix
 `nix build` should do everything for you.
+
+## Current list of plugins
+ -  Command (running shell commands, command suggestion)
+ -  Emacs (opening emacs in a directory from ~/projects)
+ -  Files (listing and opening files)
+ -  Google (search some text through google's web interface)
+ -  Qalc (use libqalculate to evaluate expressions)
+ -  Stackoverflow (search for questions with similar titles)
+ -  Sway (list and focus windows)
+ -  Wiki (search english wikipedia)
 
 ## Extending
  -  Create `src/Plugins/YourPlugin.hs` that exports 
