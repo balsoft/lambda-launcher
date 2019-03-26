@@ -35,6 +35,8 @@ executable lambda-launcher
                       , Plugins.Command
                       , Plugins.Emacs
                       , Plugins.Wiki
+                      , Plugins.Stackoverflow
+                      , Plugins.Wmctrl
   default-language:     Haskell2010
   ghc-options:          -threaded
                         

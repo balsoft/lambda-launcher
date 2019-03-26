@@ -8,7 +8,8 @@ import Plugins.Qalc
 import Plugins.Stackoverflow
 import Plugins.Sway
 import Plugins.Wiki
+import Plugins.Wmctrl
 import Types
 
 plugins :: [String -> IO [Result]]
-plugins = [google, qalc, emacs, sway, files, command, wiki, stackoverflow]
+plugins = [google, qalc, emacs, sway, wmctrl, files, command, wiki, stackoverflow]
