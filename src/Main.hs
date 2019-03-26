@@ -127,7 +127,7 @@ update' state (ResultAdded q x xs) =
   if q == query state
     then updateResults q xs
     else return Nothing
-update' state (Activated a) = Transition state $ seq a $ return $ Just Closed
+update' state (Activated a) = Transition state $ (a >> (return $ Just Closed))
 update' _ Closed = Exit
 
 main :: IO ()

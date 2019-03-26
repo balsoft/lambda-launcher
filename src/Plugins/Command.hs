@@ -2,7 +2,7 @@ module Plugins.Command where
 
 import Types
 
-import System.Process (callCommand)
+import System.Process (callCommand, spawnCommand)
 
 import System.Environment (getEnv)
 
@@ -23,5 +23,6 @@ command s = do
         filter (\x -> (s `isInfixOf` x) || (x `isPrefixOf` s)) executables
   return $
     map
-      (\x -> Action ("Run command " ++ max x s) 1 $ void $ callCommand $ max s x) $
+      (\x ->
+         Action ("Run command " ++ max x s) 1 $ void $ spawnCommand $ max s x) $
     take 3 $ suitable
