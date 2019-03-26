@@ -82,6 +82,6 @@ wiki s = do
   let res = (\x -> (htmlToPlain $ snippet x, show $ pageid x)) <$> s
   return $
     (\(text, curid) ->
-       Action text 3 $
+       Action text 4 $
        openUrlAction $ "https://en.wikipedia.org/?curid=" ++ curid) <$>
     res

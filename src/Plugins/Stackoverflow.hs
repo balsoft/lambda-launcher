@@ -55,5 +55,5 @@ stackoverflow :: String -> IO [Types.Result]
 stackoverflow s =
   fmap
     (\(Question t i) ->
-       Action t 4 $ openUrlAction $ "https://stackoverflow.com/q/" ++ show i) <$>
+       Action t 5 $ openUrlAction $ "https://stackoverflow.com/q/" ++ show i) <$>
   findSOQuestions s
