@@ -12,4 +12,5 @@ import Plugins.Wmctrl
 import Types
 
 plugins :: [String -> IO [Result]]
-plugins = [google, qalc, emacs, sway, wmctrl, files, command, wiki, stackoverflow]
+plugins =
+  [google, qalc, emacs, sway, wmctrl, files, command, wiki, stackoverflow]
