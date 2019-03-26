@@ -34,7 +34,7 @@ import GI.Gtk.Declarative
 import GI.Gtk.Declarative.App.Simple
 import System.IO.Unsafe (unsafeInterleaveIO)
 
-import Data.List (sortOn)
+import Data.List (genericLength, sortOn)
 
 import Types
 
@@ -66,10 +66,9 @@ searchView State {results} =
     [ #title := "λauncher"
     , on #deleteEvent (const (True, Closed))
     , #widthRequest := 500
-    , #heightRequest := 300
+    , #heightRequest := (32 + (min 400 (32 * genericLength results)))
     , #resizable := False
     , #canFocus := False
-    , #windowPosition := WindowPositionCenterAlways
     ] $
   bin
     ScrolledWindow
@@ -128,10 +127,7 @@ update' state (ResultAdded q x xs) =
   if q == query state
     then updateResults q xs
     else return Nothing
-update' state (Activated a) =
-  Transition state $ do
-    a
-    return $ Just Closed
+update' state (Activated a) = Transition state $ seq a $ return $ Just Closed
 update' _ Closed = Exit
 
 main :: IO ()

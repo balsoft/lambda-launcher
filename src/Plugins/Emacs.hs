@@ -14,12 +14,11 @@ emacsOpenAction :: String -> Result
 emacsOpenAction s =
   Action ("Open emacs in " ++ s) 2 $ do
     dir <- projectsDir
-    files <- listDirectory =<< (++ s) <$> projectsDir
+    files <- listDirectory $ dir ++ s
     void $
       if "default.nix" `elem` files
         then spawnCommand $ "cd " ++ dir ++ s ++ "; nix-shell --run emacs"
         else spawnCommand $ "cd " ++ dir ++ s ++ "; emacsclient -c ."
-    return ()
 
 emacs :: String -> IO [Result]
 emacs s =

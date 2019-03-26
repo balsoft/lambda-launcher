@@ -2,19 +2,15 @@ module Plugins.Support where
 
 import Types
 
+import Control.Monad (void)
 import Data.List (isPrefixOf)
 import System.Process (callProcess, spawnProcess)
 
 copyAction :: Priority -> String -> Result
-copyAction p s =
-  Action s p $ do
-    _ <- callProcess "wl-copy" [s]
-    return ()
+copyAction p s = Action s p $ void $ callProcess "wl-copy" [s]
 
 openUrlAction :: String -> IO ()
-openUrlAction s = do
-  _ <- spawnProcess "xdg-open" [s]
-  return ()
+openUrlAction s = void $ spawnProcess "xdg-open" [s]
 
 trigger :: Plugin -> String -> Plugin
 trigger plug trig =
