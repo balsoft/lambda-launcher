@@ -69,6 +69,7 @@ searchView State {results} =
     , #heightRequest := (32 + (min 400 (32 * genericLength results)))
     , #resizable := False
     , #canFocus := False
+    , on #map (QueryChanged "")
     ] $
   bin
     ScrolledWindow
@@ -84,10 +85,7 @@ searchView State {results} =
         SearchEntry
         [ onM #searchChanged toQueryChangedEvent
         , on #stopSearch Closed
-        , afterCreated
-            (\w -> do
-               void $ Gtk.on w #map $ #grabFocus w
-               return ())
+        , afterCreated (\w -> void $ Gtk.on w #map $ #grabFocus w)
         ]
     buildResults res =
       Vector.fromList $
