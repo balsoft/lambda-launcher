@@ -12,7 +12,7 @@ import System.Directory (doesDirectoryExist, listDirectory)
 
 import Data.List (isInfixOf, isPrefixOf)
 
-import Control.Monad (filterM)
+import Control.Monad (filterM, void)
 
 command :: String -> IO [Result]
 command s = do
@@ -23,7 +23,5 @@ command s = do
         filter (\x -> (s `isInfixOf` x) || (x `isPrefixOf` s)) executables
   return $
     map
-      (\x ->
-         Action ("Run command " ++ max x s) 1 $
-         seq (callCommand $ max s x) (return ())) $
+      (\x -> Action ("Run command " ++ max x s) 1 $ void $ callCommand $ max s x) $
     take 3 $ suitable

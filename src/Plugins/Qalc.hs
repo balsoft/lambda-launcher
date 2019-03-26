@@ -17,6 +17,5 @@ qalc s = do
         (listToMaybe $ take 1 $ reverse $ take 3 $ lines str)
   return $
     concat $
-    filter (\(Action x p _) -> not $ "error" `isInfixOf` x) .
-    pure . copyAction 1 <$>
+    filter (\a -> not $ "error" `isInfixOf` shownText a) . pure . copyAction 1 <$>
     (res :: Maybe String)

@@ -7,3 +7,5 @@ data Result = Action
   , priority :: Priority
   , action :: IO ()
   }
+
+type Plugin = String -> IO [Result]

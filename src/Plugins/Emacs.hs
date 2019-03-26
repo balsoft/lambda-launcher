@@ -1,5 +1,6 @@
 module Plugins.Emacs where
 
+import Control.Monad (void)
 import Data.List (isInfixOf)
 import System.Directory (listDirectory)
 import System.Environment (getEnv)
@@ -14,7 +15,7 @@ emacsOpenAction s =
   Action ("Open emacs in " ++ s) 2 $ do
     dir <- projectsDir
     files <- listDirectory =<< (++ s) <$> projectsDir
-    _ <-
+    void $
       if "default.nix" `elem` files
         then spawnCommand $ "cd " ++ dir ++ s ++ "; nix-shell --run emacs"
         else spawnCommand $ "cd " ++ dir ++ s ++ "; emacsclient -c ."
