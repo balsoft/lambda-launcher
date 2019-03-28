@@ -33,10 +33,7 @@ let
   variant = if doBenchmark then pkgs.haskell.lib.doBenchmark else pkgs.lib.id;
 
   drv = variant (haskellPackages.callPackage f {});
-  
-  nix-bundle-src = "${pkgs.nix-bundle}/share/nix-bundle";
-  nix-bundle = (import ("${nix-bundle-src}/appimage-top.nix") {}) // (import "${nix-bundle-src}/default.nix" {});
 
 in
 
-  if pkgs.lib.inNixShell then drv.env else (drv // {bundle = nix-bundle.nix-bootstrap { extraTargets = []; run = "/bin/lambda-launcher"; target = drv; };})
+  if pkgs.lib.inNixShell then drv.env else drv
