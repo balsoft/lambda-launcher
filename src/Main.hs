@@ -16,7 +16,6 @@ import qualified Data.Vector as Vector
 
 import Control.Applicative (optional)
 
-import Control.Concurrent.Async (mapConcurrently)
 import GI.Gtk
   ( Box(..)
   , Button(..)
@@ -25,14 +24,14 @@ import GI.Gtk
   , ScrolledWindow(..)
   , SearchEntry(..)
   , Window(..)
-  , WindowPosition(..)
-  , WindowType(..)
   , getEntryText
   )
 import qualified GI.Gtk as Gtk
 import GI.Gtk.Declarative
 import GI.Gtk.Declarative.App.Simple
 import System.IO.Unsafe (unsafeInterleaveIO)
+
+import Data.Functor (($>))
 
 import Data.List (genericLength, sortOn)
 
@@ -125,16 +124,16 @@ update' state (ResultAdded q x xs) =
   if q == query state
     then updateResults q xs
     else return Nothing
-update' state (Activated a) = Transition state $ (a >> (return $ Just Closed))
+update' state (Activated a) = Transition state $ a $> Just Closed
 update' _ Closed = Exit
 
 main :: IO ()
-main = do
+main =
   void $
-    run
-      App
-        { view = searchView
-        , update = update'
-        , inputs = []
-        , initialState = State "" []
-        }
+  run
+    App
+      { view = searchView
+      , update = update'
+      , inputs = []
+      , initialState = State "" []
+      }

@@ -13,7 +13,7 @@ let
       mkDerivation {
         pname = "lambda-launcher";
         version = "0.1.0.0";
-        src = ./.;
+        src = pkgs.lib.sourceByRegex ./. [".*\.cabal$" ".*src.*"];
         isLibrary = false;
         isExecutable = true;
         executableHaskellDepends = [
