@@ -14,15 +14,20 @@ gtk-gi-declarative.
 ### Nix
 `nix build` should do everything for you.
 
-## Current list of plugins
- -  Command (running shell commands, command suggestion)
- -  Emacs (opening emacs in a directory from ~/projects)
- -  Files (listing and opening files)
- -  Google (search some text through google's web interface)
- -  Qalc (use libqalculate to evaluate expressions)
- -  Stackoverflow (search for questions with similar titles)
- -  Sway (list and focus windows)
- -  Wiki (search english wikipedia)
+## Current list of plugins 
+| Name          | Description                                     | Required dependencies | Optional dependencies |
+|---------------|-------------------------------------------------|-----------------------|-----------------------|
+| Command       | run shell commands, with suggestions            |                       |                       |
+| Emacs         | open emacs in a directory from ~/projects       | emacs                 | nix-shell             |
+| Files         | list and open files                             |                       |                       |
+| Google        | search some text through google's web interface |                       |                       |
+| Qalc          | use libqalculate to evaluate expressions        | qalc                  |                       |
+| Stackoverflow | search for questions with similar titles        |                       |                       |
+| Sway          | list and focus windows on sway                  | swaymsg               |                       |
+| Wiki          | search english wikipedia                        |                       |                       |
+| Wmctrl        | list and focus windows on X11                   | wmctrl                |                       |
+
+If a plugin doesn't work, make sure you've installed the corresponding dependencies!
 
 ## Extending
  -  Create `src/Plugins/YourPlugin.hs` that exports 
