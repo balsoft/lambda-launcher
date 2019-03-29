@@ -24,6 +24,8 @@ Edit `configuration` top-level binding in `src/Main.hs`. The `Configuration` typ
 ## Building
 ### Nix
 `nix build` should do everything for you.
+### Cabal
+`cabal new-run` works for me. If it doesn't, add an issue!
 
 ## Current list of plugins 
 | Name          | Description                                     | Required dependencies | Optional dependencies |
