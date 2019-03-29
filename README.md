@@ -18,6 +18,7 @@ gtk-gi-declarative.
 | Name          | Description                                     | Required dependencies | Optional dependencies |
 |---------------|-------------------------------------------------|-----------------------|-----------------------|
 | Command       | run shell commands, with suggestions            |                       |                       |
+| Duckduckgo    | search the web with DDG instant answers         |                       |                       |
 | Emacs         | open emacs in a directory from ~/projects       | emacs                 | nix-shell             |
 | Files         | list and open files                             |                       |                       |
 | Google        | search some text through google's web interface |                       |                       |
