@@ -52,6 +52,12 @@ data State = State
   , results :: [Result]
   }
 
+data Configuration = Configuration
+  { width :: Integer
+  , maxHeight :: Integer
+  , maxChars :: Integer
+  }
+
 cutOffAt :: String -> Int -> String
 s `cutOffAt` i =
   if length s < i
@@ -68,6 +74,7 @@ searchView State {results} =
     , #heightRequest := (32 + (min 400 (32 * genericLength results)))
     , #resizable := False
     , #canFocus := False
+    , #decorated := False
     , on #map (QueryChanged "")
     ] $
   bin
@@ -117,13 +124,18 @@ update' state (ResultAdded q x xs) =
   Transition
     state
       { results =
-          if q == query state
-            then sortOn priority $ (results state) ++ x
-            else results state
+          if anyTriggered
+            then x
+            else if queryMatch
+                   then sortOn priority $ (results state) ++ x
+                   else results state
       } $
-  if q == query state
+  if queryMatch && (not anyTriggered)
     then updateResults q xs
     else return Nothing
+  where
+    queryMatch = q == query state
+    anyTriggered = any ((== 0) . priority) x
 update' state (Activated a) = Transition state $ a $> Just Closed
 update' _ Closed = Exit
 
