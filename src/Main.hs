@@ -24,6 +24,7 @@ import GI.Gtk
   , ScrolledWindow(..)
   , SearchEntry(..)
   , Window(..)
+  , WindowPosition(..)
   , getEntryText
   )
 import qualified GI.Gtk as Gtk
@@ -39,6 +40,19 @@ import Types
 
 import Plugins.Main
 
+import GHC.Int (Int32)
+
+-- Configuration!
+data Configuration = Configuration
+  { width :: Int32
+  , maxHeight :: Int32
+  , maxChars :: Int
+  }
+
+configuration :: Configuration
+-- Edit this
+configuration = Configuration 500 400 60
+
 data Event
   = QueryChanged String
   | ResultAdded String
@@ -50,12 +64,6 @@ data Event
 data State = State
   { query :: String
   , results :: [Result]
-  }
-
-data Configuration = Configuration
-  { width :: Integer
-  , maxHeight :: Integer
-  , maxChars :: Integer
   }
 
 cutOffAt :: String -> Int -> String
@@ -70,11 +78,13 @@ searchView State {results} =
     Window
     [ #title := "λauncher"
     , on #deleteEvent (const (True, Closed))
-    , #widthRequest := 500
-    , #heightRequest := (32 + (min 400 (32 * genericLength results)))
+    , #widthRequest := (width configuration)
+    , #heightRequest :=
+      (32 + (min (maxHeight configuration) (32 * genericLength results)))
     , #resizable := False
     , #canFocus := False
     , #decorated := False
+    , #windowPosition := WindowPositionCenter
     , on #map (QueryChanged "")
     ] $
   bin
@@ -99,7 +109,7 @@ searchView State {results} =
         (\(Action r _ a) ->
            widget
              Button
-             [ #label := (Text.pack $ r `cutOffAt` 60)
+             [ #label := (Text.pack $ r `cutOffAt` (maxChars configuration))
              , on #clicked $ Activated a
              ])
         res
