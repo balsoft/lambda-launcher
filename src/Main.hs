@@ -10,6 +10,7 @@ plugins :: [Plugin]
 plugins =
   [ trigger qalc "q "
   , trigger emacs "em "
+  , triggerStrict google "g "
   , trigger sway "sw "
   , trigger wmctrl "win "
   , trigger files "file "

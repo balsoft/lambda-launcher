@@ -2,3 +2,4 @@ result
 dist*
 .ghc*
 .stack-work/
+src/Main.hs
