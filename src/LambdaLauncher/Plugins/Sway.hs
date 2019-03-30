@@ -11,37 +11,38 @@ import System.Process (callProcess, readProcess)
 import LambdaLauncher.Types
 
 data Node = Node
-  { name :: Maybe String
-  , app_id :: Maybe String
-  , id :: Integer
-  , pid :: Maybe Integer
-  , nodes :: Maybe [Node]
+  { nName :: Maybe String
+  , nApp_id :: Maybe String
+  , nId :: Integer
+  , nPid :: Maybe Integer
+  , nNodes :: Maybe [Node]
   } deriving (Show, Generic)
 
-data Window =
-  Window String
-         (Maybe String)
-         Integer
-         Integer
+data Window = Window
+  { wName   :: String
+  , wApp_id :: Maybe String
+  , wId     :: Integer
+  , wPid    :: Integer
+  }
 
 instance FromJSON Node
 
 instance ToJSON Node
 
 findWindows :: Node -> [Window]
-findWindows ((Node (Just name) app_id id (Just pid) _)) =
-  [Window name app_id id pid]
-findWindows (node) = concat (mconcat <$> map findWindows <$> nodes node)
+findWindows (Node (Just name) nApp_id nId (Just pid) _) =
+  [Window name nApp_id nId pid]
+findWindows node = concat (mconcat . map findWindows <$> nNodes node)
 
 windowToResults :: Window -> LambdaLauncher.Types.Result
-windowToResults (Window name app_id id pid) =
-  Action name 2 $ callProcess "swaymsg" ["[con_id=" ++ show id ++ "] focus"]
+windowToResults Window{..} =
+  Action wName 2 $ callProcess "swaymsg" ["[con_id=" ++ show wId ++ "] focus"]
 
 sway :: Plugin
 sway s = do
-  tree <- encodeUtf8 <$> pack <$> readProcess "swaymsg" ["-t", "get_tree"] ""
-  return $
-    concat $
-    map windowToResults <$> filter (\(Window name _ _ _) -> isInfixOf s name) <$>
-    findWindows <$>
-    decodeStrict tree
+  tree <- encodeUtf8 . pack <$> readProcess "swaymsg" ["-t", "get_tree"] ""
+  pure $ concat $
+    map windowToResults
+      . filter (\Window{..} -> s `isInfixOf` wName)
+      . findWindows
+      <$> decodeStrict tree

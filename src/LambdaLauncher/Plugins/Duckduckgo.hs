@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module LambdaLauncher.Plugins.Duckduckgo where
 
 import LambdaLauncher.Plugins.Support

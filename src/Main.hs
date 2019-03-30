@@ -1,4 +1,4 @@
-module Main where 
+module Main where
 import LambdaLauncher.Main
 import LambdaLauncher.Plugins
 import LambdaLauncher.Types
