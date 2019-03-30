@@ -15,8 +15,8 @@ import Data.Text (Text)
 import Network.HTTP.Req
 
 data RelatedTopic = RelatedTopic
-  { text :: Maybe String
-  , firstURL :: Maybe String
+  { text :: Maybe Text
+  , firstURL :: Maybe Text
   } deriving (Eq, Show)
 
 data DDGResponse = DDGResponse
@@ -39,7 +39,7 @@ fetchDDGAPI s =
       ("format" =: ("json" :: String))
     liftIO $ return $ responseBody bs
 
-getDDGInstantResponse :: String -> IO DDGResponse
+getDDGInstantResponse :: Text -> IO DDGResponse
 getDDGInstantResponse s = do
   Right b <- eitherDecodeStrict <$> fetchDDGAPI s
   return b

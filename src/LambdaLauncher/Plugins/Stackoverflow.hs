@@ -16,13 +16,17 @@ import Data.Maybe (maybeToList)
 import Data.Monoid ((<>))
 import GHC.Generics
 import Network.HTTP.Req
+import Data.Text (Text)
+
+import qualified Data.Text as T
+
 
 data Response = Response
   { items :: [Question]
   } deriving (Show, Generic)
 
 data Question = Question
-  { title :: String
+  { title :: Text
   , question_id :: Integer
   } deriving (Show, Generic)
 
@@ -30,9 +34,9 @@ instance FromJSON Response
 
 instance FromJSON Question
 
-findSOQuestions :: String -> IO [Question]
+findSOQuestions :: Text -> IO [Question]
 findSOQuestions s =
-  concat <$> maybeToList <$> fmap items <$> decodeStrict <$>
+  concat . maybeToList . fmap items . decodeStrict <$>
   ((runReq def $ do
       bs <-
         req
@@ -52,5 +56,5 @@ stackoverflow :: Plugin
 stackoverflow s =
   fmap
     (\(Question t i) ->
-       Action t 5 $ openUrlAction $ "https://stackoverflow.com/q/" ++ show i) <$>
+       Action t 5 $ openUrlAction $ T.append "https://stackoverflow.com/q/" (T.pack $ show i)) <$>
   findSOQuestions s

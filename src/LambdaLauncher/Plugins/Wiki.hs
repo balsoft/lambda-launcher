@@ -18,6 +18,8 @@ import GHC.Generics
 import Network.HTTP.Req
 import System.Process (callProcess)
 
+import qualified Data.Text as T
+
 data Response = Response
   { query :: Query
   } deriving (Show, Generic)
@@ -61,7 +63,7 @@ replaceAmps (c:xs) = c : replaceAmps xs
 htmlToPlain :: String -> String
 htmlToPlain = replaceAmps . removeTags
 
-getWikipediaData :: String -> IO ByteString
+getWikipediaData :: Text -> IO ByteString
 getWikipediaData s =
   runReq def $ do
     bs <-
@@ -77,9 +79,8 @@ wiki :: Plugin
 wiki s = do
   (Just response) <- decodeStrict <$> getWikipediaData s
   let s = search $ query response
-  let res = (\x -> (htmlToPlain $ snippet x, show $ pageid x)) <$> s
+  let res = (\x -> (T.pack $ htmlToPlain $ snippet x, T.pack . show $ pageid x)) <$> s
   return $
     (\(text, curid) ->
        Action text 4 $
-       openUrlAction $ "https://en.wikipedia.org/?curid=" ++ curid) <$>
-    res
+       openUrlAction $ T.append "https://en.wikipedia.org/?curid=" curid) <$> res
