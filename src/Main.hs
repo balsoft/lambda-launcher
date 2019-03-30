@@ -21,7 +21,10 @@ plugins =
   ]
 
 conf :: Configuration
-conf = Configuration 500 300 60
+conf = Configuration
+  { width = 500
+  , maxHeight = 300
+  , maxChars = 60 }
 
 main :: IO ()
 main = runApp conf plugins

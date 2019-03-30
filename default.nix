@@ -10,12 +10,14 @@ let
       , gi-gtk-declarative-app-simple, haskell-gi, haskell-gi-base
       , process, req, stdenv, text, vector
       }:
-      mkDerivation {
+      mkDerivation rec {
         pname = "lambda-launcher";
         version = "0.1.0.0";
         src = pkgs.lib.sourceByRegex ./. [".*\.cabal$" ".*src.*"];
         isLibrary = false;
         isExecutable = true;
+        doHaddock = true;
+        haddockFlags = ["--executable" pname];
         executableHaskellDepends = [
           aeson async base bytestring data-default-class directory filepath
           gi-gdk gi-glib gi-gobject gi-gtk gi-gtk-declarative
