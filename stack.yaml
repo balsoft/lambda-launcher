@@ -1,0 +1,5 @@
+resolver: lts-13.14
+
+extra-deps:
+  - gi-gtk-declarative-0.4.2
+  - gi-gtk-declarative-app-simple-0.4.1
