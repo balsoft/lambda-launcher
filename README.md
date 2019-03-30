@@ -1,4 +1,4 @@
-# λauncher
+# λauncher [![Build Status](https://travis-ci.com/balsoft/lambda-launcher.svg?branch=master)](https://travis-ci.com/balsoft/lambda-launcher)
 
 λauncher is a GTK launcher application built with Haskell and 
 gtk-gi-declarative.
