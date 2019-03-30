@@ -1,11 +1,11 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE PartialTypeSignatures #-}
 
-module Plugins.Stackoverflow where
+module LambdaLauncher.Plugins.Stackoverflow where
 
-import Types
+import LambdaLauncher.Types
 
-import Plugins.Support
+import LambdaLauncher.Plugins.Support
 
 import Control.Monad
 import Control.Monad.IO.Class
@@ -50,7 +50,7 @@ findSOQuestions s =
         ("!C(o*VkSJu.8H6s2yB" :: String)
       liftIO $ return $ responseBody bs) :: IO ByteString)
 
-stackoverflow :: String -> IO [Types.Result]
+stackoverflow :: Plugin
 stackoverflow s =
   fmap
     (\(Question t i) ->

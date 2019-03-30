@@ -1,7 +1,7 @@
-module Plugins.Duckduckgo where
+module LambdaLauncher.Plugins.Duckduckgo where
 
-import Plugins.Support
-import Types
+import LambdaLauncher.Plugins.Support
+import LambdaLauncher.Types
 
 import Control.Monad (forM)
 import Control.Monad.IO.Class (liftIO)
@@ -43,7 +43,7 @@ getDDGInstantResponse s = do
   Right b <- eitherDecodeStrict <$> fetchDDGAPI s
   return b
 
-topicToResult :: RelatedTopic -> Maybe Types.Result
+topicToResult :: RelatedTopic -> Maybe LambdaLauncher.Types.Result
 topicToResult (RelatedTopic (Just t) (Just u)) =
   Just $ Action t 2 $ openUrlAction u
 topicToResult _ = Nothing

@@ -1,8 +1,8 @@
-module Plugins.Google where
+module LambdaLauncher.Plugins.Google where
 
-import Types
+import LambdaLauncher.Types
 
-import Plugins.Support
+import LambdaLauncher.Plugins.Support
 
 google :: Plugin
 google s =

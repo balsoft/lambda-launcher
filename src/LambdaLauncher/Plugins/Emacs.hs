@@ -1,11 +1,11 @@
-module Plugins.Emacs where
+module LambdaLauncher.Plugins.Emacs where
 
 import Control.Monad (void)
 import Data.List (isInfixOf)
 import System.Directory (listDirectory)
 import System.Environment (getEnv)
 import System.Process (spawnCommand)
-import Types
+import LambdaLauncher.Types
 
 projectsDir :: IO FilePath
 projectsDir = (++ "/projects/") <$> getEnv "HOME"
@@ -20,7 +20,7 @@ emacsOpenAction s =
         then spawnCommand $ "cd " ++ dir ++ s ++ "; nix-shell --run emacs"
         else spawnCommand $ "cd " ++ dir ++ s ++ "; emacsclient -c ."
 
-emacs :: String -> IO [Result]
+emacs :: Plugin
 emacs s =
   fmap emacsOpenAction <$> filter (s `isInfixOf`) <$>
   (listDirectory =<< (++ "/projects") <$> getEnv "HOME")

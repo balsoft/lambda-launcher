@@ -1,17 +1,11 @@
-module Plugins.Command where
+module LambdaLauncher.Plugins.Command where
 
-import Types
-
+import LambdaLauncher.Types
 import System.Process (callCommand, spawnCommand)
-
 import System.Environment (getEnv)
-
 import System.FilePath.Posix (splitSearchPath)
-
 import System.Directory (doesDirectoryExist, listDirectory)
-
 import Data.List (isInfixOf, isPrefixOf)
-
 import Control.Monad (filterM, void)
 
 command :: String -> IO [Result]
