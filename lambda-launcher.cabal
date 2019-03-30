@@ -2,7 +2,7 @@ name:                lambda-launcher
 version:             0.1.0.0
 build-type:          Simple
 cabal-version:       >=1.10
-                                                                                                                                                                                  
+
 executable lambda-launcher
   main-is:              Main.hs
   build-depends:        base == 4.*
@@ -26,7 +26,7 @@ executable lambda-launcher
                       , data-default-class == 0.*
   hs-source-dirs:       src
   other-modules:        Types
-                      , Plugins.Main 
+                      , Plugins.Main
                       , Plugins.Support
                       , Plugins.Qalc
                       , Plugins.Sway
@@ -40,4 +40,9 @@ executable lambda-launcher
                       , Plugins.Duckduckgo
   default-language:     Haskell2010
   ghc-options:          -threaded
-                        
+
+  default-extensions:  RecordWildCards
+                       OverloadedStrings
+                       LambdaCase
+                       ScopedTypeVariables
+                       TypeApplications

@@ -1,5 +1,3 @@
-{-# LANGUAGE RecordWildCards #-}
-
 module Plugins.Support where
 
 import Types
@@ -16,7 +14,7 @@ openUrlAction s = void $ spawnProcess "xdg-open" [s]
 
 triggerOr o plug trig query =
   if trig `isPrefixOf` query
-    then fmap (\r -> r {priority = 0}) <$> (plug $ drop (length trig) query)
+    then fmap (\r -> r {priority = 0}) <$> plug (drop (length trig) query)
     else o
 
 trigger :: Plugin -> String -> Plugin

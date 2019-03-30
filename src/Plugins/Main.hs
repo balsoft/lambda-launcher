@@ -10,7 +10,11 @@ import Plugins.Sway
 import Plugins.Wiki
 import Plugins.Wmctrl
 import Types
+import Plugins.Support (trigger, triggerStrict)
 
 plugins :: [Plugin]
 plugins =
-  [qalc, emacs, sway, wmctrl, files, command, wiki, duckduckgo, stackoverflow]
+  [qalc, emacs, sway, wmctrl, files, command, wiki, duckduckgo, stackoverflow, triggerWiki]
+
+triggerWiki :: Plugin
+triggerWiki = triggerStrict wiki "wiki "

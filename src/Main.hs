@@ -5,8 +5,6 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE OverloadedLabels #-}
 {-# LANGUAGE OverloadedLists #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RecordWildCards #-}
 
 module Main where
 
@@ -51,7 +49,7 @@ data Configuration = Configuration
 
 configuration :: Configuration
 -- Edit this
-configuration = Configuration 500 400 60
+configuration = Configuration 800 1700 100
 
 data Event
   = QueryChanged String
@@ -114,7 +112,7 @@ searchView State {results} =
              ])
         res
     toQueryChangedEvent :: SearchEntry -> IO Event
-    toQueryChangedEvent w = QueryChanged <$> Text.unpack <$> getEntryText w
+    toQueryChangedEvent w = QueryChanged . Text.unpack <$> getEntryText w
 
 updateResults :: String -> [IO [Result]] -> IO (Maybe Event)
 updateResults _ [] = return Nothing

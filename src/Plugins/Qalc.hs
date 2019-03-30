@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module Plugins.Qalc where
 
 import Data.List (isInfixOf)

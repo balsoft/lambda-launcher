@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module Plugins.Duckduckgo where
 
 import Plugins.Support
