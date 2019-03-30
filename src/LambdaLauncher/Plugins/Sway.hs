@@ -4,23 +4,26 @@ module LambdaLauncher.Plugins.Sway where
 
 import Data.Aeson
 import Data.List (isInfixOf)
-import Data.Text (pack)
+import Data.Text (Text, pack)
 import Data.Text.Encoding (encodeUtf8)
 import GHC.Generics
 import System.Process (callProcess, readProcess)
 import LambdaLauncher.Types
 
+import qualified Data.Text as T
+
+
 data Node = Node
-  { nName :: Maybe String
-  , nApp_id :: Maybe String
+  { nName :: Maybe Text
+  , nApp_id :: Maybe Text
   , nId :: Integer
   , nPid :: Maybe Integer
   , nNodes :: Maybe [Node]
   } deriving (Show, Generic)
 
 data Window = Window
-  { wName   :: String
-  , wApp_id :: Maybe String
+  { wName   :: Text
+  , wApp_id :: Maybe Text
   , wId     :: Integer
   , wPid    :: Integer
   }
@@ -43,6 +46,6 @@ sway s = do
   tree <- encodeUtf8 . pack <$> readProcess "swaymsg" ["-t", "get_tree"] ""
   pure $ concat $
     map windowToResults
-      . filter (\Window{..} -> s `isInfixOf` wName)
+      . filter (\Window{..} -> s `T.isInfixOf` wName)
       . findWindows
       <$> decodeStrict tree

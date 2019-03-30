@@ -1,9 +1,8 @@
 module Main where
+
 import LambdaLauncher.Main
 import LambdaLauncher.Plugins
 import LambdaLauncher.Types
-
-
 import LambdaLauncher.Plugins.Support (trigger, triggerStrict)
 
 plugins :: [Plugin]

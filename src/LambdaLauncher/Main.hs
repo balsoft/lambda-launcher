@@ -9,7 +9,6 @@
 module LambdaLauncher.Main ( runApp ) where
 
 import Control.Monad (void)
-import qualified Data.Text as Text
 import qualified Data.Vector as Vector
 
 import Control.Applicative (optional)
@@ -26,36 +25,39 @@ import GI.Gtk
   , WindowPosition(..)
   , getEntryText
   )
+
 import qualified GI.Gtk as Gtk
 import GI.Gtk.Declarative
 import GI.Gtk.Declarative.App.Simple
 import System.IO.Unsafe (unsafeInterleaveIO)
 
 import Data.Functor (($>))
-
+import Data.Text (Text)
 import Data.List (genericLength, sortOn)
 
 import LambdaLauncher.Types
 
+import qualified Data.Text as T
+
 
 data Event
-  = QueryChanged String
-  | ResultAdded String
+  = QueryChanged Text
+  | ResultAdded Text
                 [Result]
                 [IO [Result]]
   | Activated (IO ())
   | Closed
 
 data State = State
-  { query :: String
+  { query :: Text
   , results :: [Result]
   }
 
-cutOffAt :: String -> Int -> String
+cutOffAt :: Text -> Int -> Text
 s `cutOffAt` i =
-  if length s < i
+  if T.length s < i
     then s
-    else (take (i - 3) s) ++ "..."
+    else T.append (T.take (i - 3) s) "..."
 
 searchView :: Configuration ->  State -> AppView Window Event
 searchView configuration State {results} =
@@ -63,9 +65,9 @@ searchView configuration State {results} =
     Window
     [ #title := "λauncher"
     , on #deleteEvent (const (True, Closed))
-    , #widthRequest := (width configuration)
+    , #widthRequest := width configuration
     , #heightRequest :=
-      (32 + (min (maxHeight configuration) (32 * genericLength results)))
+      (32 + min (maxHeight configuration) (32 * genericLength results))
     , #resizable := False
     , #canFocus := False
     , #decorated := False
@@ -95,14 +97,14 @@ searchView configuration State {results} =
         (\(Action r _ a) ->
            widget
              Button
-             [ #label := (Text.pack $ r `cutOffAt` (maxChars configuration))
+             [ #label := (r `cutOffAt` maxChars configuration)
              , on #clicked $ Activated a
              ])
         res
     toQueryChangedEvent :: SearchEntry -> IO Event
-    toQueryChangedEvent w = QueryChanged . Text.unpack <$> getEntryText w
+    toQueryChangedEvent w = QueryChanged <$> getEntryText w
 
-updateResults :: String -> [IO [Result]] -> IO (Maybe Event)
+updateResults :: Text -> [IO [Result]] -> IO (Maybe Event)
 updateResults _ [] = return Nothing
 updateResults q (result:results) = do
   first <- unsafeInterleaveIO $ optional $ result

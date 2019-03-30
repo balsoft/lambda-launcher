@@ -1,17 +1,17 @@
 module LambdaLauncher.Types where
 
 import GHC.Int (Int32)
+import Data.Text (Text)
 
 type Priority = Integer
 
 data Result = Action
-  { shownText :: String
+  { shownText :: Text
   , priority :: Priority
   , action :: IO ()
   }
 
-type Plugin = String -> IO [Result]
-
+type Plugin = Text -> IO [Result]
 
 -- Configuration!
 data Configuration = Configuration

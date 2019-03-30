@@ -7,16 +7,20 @@ import System.FilePath.Posix (splitSearchPath)
 import System.Directory (doesDirectoryExist, listDirectory)
 import Data.List (isInfixOf, isPrefixOf)
 import Control.Monad (filterM, void)
+import Data.Text (Text)
 
-command :: String -> IO [Result]
+import qualified Data.Text as T
+
+
+command :: Text -> IO [Result]
 command s = do
     envs <- splitSearchPath <$> getEnv "PATH"
     existEnvs <- filterM doesDirectoryExist envs
-    commandLists <- mapM listDirectory existEnvs
-    let commands n = take n $ filter (s `isPrefixOf`) $ mconcat commandLists
+    commandList <- mconcat <$> mapM listDirectory existEnvs
+    let commands n = map T.pack . take n $ filter (isPrefixOf (T.unpack s)) commandList
     mapM result (commands 3)
   where
-    result :: String -> IO Result
+    result :: Text -> IO Result
     result x = pure
-      $ Action ("Run command " ++ max x s) 1
-      $ void $ spawnCommand $ max s x
+      $ Action (T.append "Run command " $ max x s) 1
+      $ void $ spawnCommand $ T.unpack $ max s x
