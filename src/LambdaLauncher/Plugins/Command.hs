@@ -1,6 +1,6 @@
-module Plugins.Command where
+module LambdaLauncher.Plugins.Command where
 
-import Types
+import LambdaLauncher.Types
 
 import System.Process (callCommand, spawnCommand)
 

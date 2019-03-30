@@ -1,9 +1,10 @@
-module Plugins.Wmctrl where
+module LambdaLauncher.Plugins.Wmctrl where
 
 import Data.List (isInfixOf)
 import System.Process (callProcess, readProcess)
-import Types
+import LambdaLauncher.Types
 
+wmctrl :: Plugin
 wmctrl s =
   filter (\a -> s `isInfixOf` shownText a) <$>
   fmap

@@ -1,8 +1,8 @@
 {-# LANGUAGE RecordWildCards #-}
 
-module Plugins.Support where
+module LambdaLauncher.Plugins.Support where
 
-import Types
+import LambdaLauncher.Types
 
 import Control.Monad (void)
 import Data.List (isPrefixOf)

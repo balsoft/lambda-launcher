@@ -1,11 +1,11 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Plugins.Wiki where
+module LambdaLauncher.Plugins.Wiki where
 
-import Types
+import LambdaLauncher.Types
 
-import Plugins.Support
+import LambdaLauncher.Plugins.Support
 
 import Control.Monad
 import Control.Monad.IO.Class
@@ -76,6 +76,7 @@ getWikipediaData s =
       ("json" :: String)
     liftIO $ return $ responseBody bs
 
+wiki :: Plugin
 wiki s = do
   (Just response) <- decodeStrict <$> getWikipediaData s
   let s = search $ query response

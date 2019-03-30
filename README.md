@@ -14,9 +14,9 @@ gtk-gi-declarative.
 All configuration at this moment is done by editing source files. This will be changed in the future to XMonad-style configuration.
 
 ### Plugins
-To configure the plugins, edit `src/Plugins/Main.hs`. You should be able to just edit the list of plugins to disable the unneeded ones. All of plugins are enabled by default.
+To configure the plugins, edit `plugins :: [Plugin]` in `src/Main.hs`. You should be able to just edit the list of plugins to disable the unneeded ones. All of plugins are enabled by default.
 #### Triggers
-Import `Plugins.Support (trigger, triggerStrict)` to `src/Plugins/Main.hs`. Now you should be able to do something like `triggerStrict wiki "wiki "` to make the Wikipedia plugin appear only when the query starts with "wiki".
+Apply `trigger` to a plugin to make it the only plugin shown when query starts with a trigger, and apply `triggerStrict` to show a plugin only when it's triggered.
 
 ### Window
 Edit `configuration` top-level binding in `src/Main.hs`. The `Configuration` type constructor's field names should be self-explanatory.

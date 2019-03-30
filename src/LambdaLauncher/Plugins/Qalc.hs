@@ -1,15 +1,15 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Plugins.Qalc where
+module LambdaLauncher.Plugins.Qalc where
 
 import Data.List (isInfixOf)
 import Data.Maybe (listToMaybe)
 import qualified Data.Text as Text
-import Plugins.Support (copyAction)
+import LambdaLauncher.Plugins.Support (copyAction)
 import System.Process (readProcess)
-import Types
+import LambdaLauncher.Types
 
-qalc :: String -> IO [Result]
+qalc :: Plugin
 qalc s = do
   str <- readProcess "qalc" [] s
   let res =
