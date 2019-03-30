@@ -70,7 +70,7 @@ getWikipediaData s =
       req GET (https "wikipedia.org" /: "w" /: "api.php") NoReqBody bsResponse $
       "action" =: ("query" :: String) <>
       "list" =: ("search" :: String) <>
-      "srsearch" =: (s :: String) <>
+      "srsearch" =: s <>
       "srlimit" =: (5 :: Integer) <>
       "format" =: ("json" :: String)
     liftIO $ return $ responseBody bs
