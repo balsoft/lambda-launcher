@@ -35,7 +35,8 @@ fetchDDGAPI s =
   runReq def $ do
     bs <-
       req GET (https "api.duckduckgo.com") NoReqBody bsResponse $
-      ("q" =: s) <> ("format" =: ("json" :: String))
+      ("q" =: s) <>
+      ("format" =: ("json" :: String))
     liftIO $ return $ responseBody bs
 
 getDDGInstantResponse :: String -> IO DDGResponse
@@ -49,6 +50,7 @@ topicToResult (RelatedTopic (Just t) (Just u)) =
 topicToResult _ = Nothing
 
 duckduckgo :: Plugin
-duckduckgo s = do
-  DDGResponse r <- getDDGInstantResponse s
-  return $ catMaybes $ topicToResult <$> r
+duckduckgo s | s == "" = mempty
+             | otherwise = do
+                 DDGResponse r <- getDDGInstantResponse s
+                 return $ catMaybes $ topicToResult <$> r

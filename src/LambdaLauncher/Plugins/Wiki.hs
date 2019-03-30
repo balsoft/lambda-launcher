@@ -66,13 +66,11 @@ getWikipediaData s =
   runReq def $ do
     bs <-
       req GET (https "wikipedia.org" /: "w" /: "api.php") NoReqBody bsResponse $
-      "action" =: ("query" :: String) <> "list" =: ("search" :: String) <>
-      "srsearch" =:
-      (s :: String) <>
-      "srlimit" =:
-      (5 :: Integer) <>
-      "format" =:
-      ("json" :: String)
+      "action" =: ("query" :: String) <>
+      "list" =: ("search" :: String) <>
+      "srsearch" =: (s :: String) <>
+      "srlimit" =: (5 :: Integer) <>
+      "format" =: ("json" :: String)
     liftIO $ return $ responseBody bs
 
 wiki :: Plugin

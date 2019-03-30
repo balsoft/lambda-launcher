@@ -40,14 +40,12 @@ findSOQuestions s =
           (https "api.stackexchange.com" /: "2.2" /: "similar")
           NoReqBody
           bsResponse $
-        "pagesize" =: (5 :: Integer) <> "order" =: ("desc" :: String) <> "sort" =:
-        ("activity" :: String) <>
-        "title" =:
-        s <>
-        "site" =:
-        ("stackoverflow" :: String) <>
-        "filter" =:
-        ("!C(o*VkSJu.8H6s2yB" :: String)
+        "pagesize" =: (5 :: Integer) <>
+        "order" =: ("desc" :: String) <>
+        "sort" =: ("activity" :: String) <>
+        "title" =: s <>
+        "site" =: ("stackoverflow" :: String) <>
+        "filter" =: ("!C(o*VkSJu.8H6s2yB" :: String)
       liftIO $ return $ responseBody bs) :: IO ByteString)
 
 stackoverflow :: Plugin
