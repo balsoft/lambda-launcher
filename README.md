@@ -7,7 +7,7 @@ gtk-gi-declarative.
 
  -  Asynchronous plugin result loading
  -  No runtime settings (not a bug, but a feature)
- -  4k memory on coldstart, 15k memory when all plugins are loaded
+ -  5M memory on coldstart, 20M memory when all plugins are loaded
  -  Very quick startup (compared to some other graphical launchers
 
 ## Configuration

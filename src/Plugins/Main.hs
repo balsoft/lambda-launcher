@@ -11,6 +11,17 @@ import Plugins.Wiki
 import Plugins.Wmctrl
 import Types
 
+import Plugins.Support (trigger, triggerStrict)
+
 plugins :: [Plugin]
 plugins =
-  [qalc, emacs, sway, wmctrl, files, command, wiki, duckduckgo, stackoverflow]
+  [ trigger qalc "qalc "
+  , trigger emacs "em "
+  , trigger sway "sw "
+  , trigger wmctrl "win "
+  , trigger files "file "
+  , command
+  , trigger wiki "wiki "
+  , trigger duckduckgo "ddg "
+  , trigger stackoverflow "so "
+  ]
