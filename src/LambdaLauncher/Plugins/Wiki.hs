@@ -61,17 +61,17 @@ replaceAmps (c:xs) = c : replaceAmps xs
 htmlToPlain :: String -> String
 htmlToPlain = replaceAmps . removeTags
 
-getWikipediaData :: String -> IO (ByteString)
+getWikipediaData :: String -> IO ByteString
 getWikipediaData s =
   runReq def $ do
     bs <-
       req GET (https "wikipedia.org" /: "w" /: "api.php") NoReqBody bsResponse $
-      ("action") =: ("query" :: String) <> ("list") =: ("search" :: String) <>
-      ("srsearch") =:
+      "action" =: ("query" :: String) <> "list" =: ("search" :: String) <>
+      "srsearch" =:
       (s :: String) <>
-      ("srlimit") =:
+      "srlimit" =:
       (5 :: Integer) <>
-      ("format") =:
+      "format" =:
       ("json" :: String)
     liftIO $ return $ responseBody bs
 
