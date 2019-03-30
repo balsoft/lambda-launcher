@@ -24,6 +24,7 @@ import GI.Gtk
   , ScrolledWindow(..)
   , SearchEntry(..)
   , Window(..)
+  , WindowType (..)
   , WindowPosition(..)
   , getEntryText
   )
@@ -72,6 +73,7 @@ searchView configuration State {results} =
     , #decorated := False
     , #windowPosition := WindowPositionCenter
     , on #map (QueryChanged "")
+    , on #focusOutEvent (const (True, Closed))
     ] $
   bin
     ScrolledWindow
