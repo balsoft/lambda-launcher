@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module LambdaLauncher.Plugins.Qalc where
 
 import Data.List (isInfixOf)
@@ -12,10 +10,11 @@ import LambdaLauncher.Types
 qalc :: Plugin
 qalc s = do
   str <- readProcess "qalc" [] s
-  let res =
-        Prelude.head . reverse . map Text.unpack . Text.splitOn "=" . Text.pack <$>
-        (listToMaybe $ take 1 $ reverse $ take 3 $ lines str)
+  let res = last
+        . map Text.unpack
+        . Text.splitOn "="
+        . Text.pack
+        <$> listToMaybe (take 1 $ reverse $ take 3 $ lines str)
   return $
     concat $
-    filter (\a -> not $ "error" `isInfixOf` shownText a) . pure . copyAction 1 <$>
-    (res :: Maybe String)
+    filter (\a -> not $ "error" `isInfixOf` shownText a) . pure . copyAction 1 <$> (res :: Maybe String)

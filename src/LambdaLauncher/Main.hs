@@ -5,8 +5,6 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE OverloadedLabels #-}
 {-# LANGUAGE OverloadedLists #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RecordWildCards #-}
 
 module LambdaLauncher.Main ( runApp ) where
 
@@ -100,7 +98,7 @@ searchView configuration State {results} =
              ])
         res
     toQueryChangedEvent :: SearchEntry -> IO Event
-    toQueryChangedEvent w = QueryChanged <$> Text.unpack <$> getEntryText w
+    toQueryChangedEvent w = QueryChanged . Text.unpack <$> getEntryText w
 
 updateResults :: String -> [IO [Result]] -> IO (Maybe Event)
 updateResults _ [] = return Nothing
@@ -136,7 +134,7 @@ update' _ state (Activated a) = Transition state $ a $> Just Closed
 update' _ _ Closed = Exit
 
 runApp :: Configuration -> [Plugin] -> IO ()
-runApp c p = 
+runApp c p =
   void $
   run
     App
