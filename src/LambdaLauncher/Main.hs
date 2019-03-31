@@ -5,6 +5,7 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE OverloadedLabels #-}
 {-# LANGUAGE OverloadedLists #-}
+{-# LANGUAGE RecordWildCards #-}
 
 module LambdaLauncher.Main ( runApp ) where
 
@@ -60,17 +61,17 @@ s `cutOffAt` i =
     else T.append (T.take (i - 3) s) "..."
 
 searchView :: Configuration ->  State -> AppView Window Event
-searchView configuration State {results} =
+searchView Configuration {..} State {results} =
   bin
     Window
     [ #title := "λauncher"
     , on #deleteEvent (const (True, Closed))
-    , #widthRequest := width configuration
+    , #widthRequest := width
     , #heightRequest :=
-      (32 + min (maxHeight configuration) (32 * genericLength results))
+      (32 + min maxHeight (32 * genericLength results))
     , #resizable := False
     , #canFocus := False
-    , #decorated := False
+    , #decorated := showBorder
     , #windowPosition := WindowPositionCenter
     , on #map (QueryChanged "")
     , on #focusOutEvent (const (True, Closed))
@@ -97,7 +98,7 @@ searchView configuration State {results} =
         (\(Action r _ a) ->
            widget
              Button
-             [ #label := (r `cutOffAt` maxChars configuration)
+             [ #label := (r `cutOffAt` maxChars )
              , on #clicked $ Activated a
              ])
         res

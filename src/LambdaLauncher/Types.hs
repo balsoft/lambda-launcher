@@ -18,4 +18,4 @@ data Configuration = Configuration
   { width :: Int32
   , maxHeight :: Int32
   , maxChars :: Int
-  }
+  , showBorder :: Bool }

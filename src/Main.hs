@@ -23,7 +23,8 @@ conf :: Configuration
 conf = Configuration
   { width = 500
   , maxHeight = 300
-  , maxChars = 60 }
+  , maxChars = 60
+  , showBorder = False }
 
 main :: IO ()
 main = runApp conf plugins
