@@ -17,7 +17,10 @@ command s = do
     envs <- splitSearchPath <$> getEnv "PATH"
     existEnvs <- filterM doesDirectoryExist envs
     commandList <- mconcat <$> mapM listDirectory existEnvs
-    let commands n = map T.pack . take n $ filter (isPrefixOf (T.unpack s)) commandList
+    let commands n = map T.pack . take n
+                     $ filter (\command -> (T.unpack s) `isPrefixOf` command
+                                        || command `isPrefixOf` (T.unpack s))
+                     commandList
     mapM result (commands 3)
   where
     result :: Text -> IO Result
