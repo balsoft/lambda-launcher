@@ -23,10 +23,11 @@ let
     }
   );
 
-  nix-bundle-src = builtins.fetchGit {
+  /*nix-bundle-src = builtins.fetchGit {
     url = "https://github.com/matthewbauer/nix-bundle";
     rev = "e8d57a08bc1912ada13af44f997e29e88e2fbb66";
-  };
+  };*/
+    nix-bundle-src = ../nix-bundle;
   nix-bundle = (import ("${nix-bundle-src}/appimage-top.nix") {}) // (import "${nix-bundle-src}/default.nix" {});
 in
 (lambda-launcher // {
@@ -36,14 +37,9 @@ in
     nixUserChrootFlags = "-p DISPLAY -p GTK_THEME"; 
   };
   appimage = nix-bundle.appimage (
-    (nix-bundle.appdir {
+    nix-bundle.appdir {
       name = "lambda-launcher";
       target = lambda-launcher-with-desktop;
-    }).overrideAttrs (old:
-      {
-        buildCommand = ''
-        '' + old.buildCommand;
-      }
-    )
+    }
   );
 })
