@@ -16,7 +16,7 @@ projectsDir = (++ "/projects/") <$> getEnv "HOME"
 
 emacsOpenAction :: Text -> Result
 emacsOpenAction s =
-  Action (T.append "Open emacs in " s) 2 $ do
+  Action (T.append "Open emacs in " s) Nothing 2 $ do
     dir <- projectsDir
     files <- listDirectory $ dir ++ T.unpack s
     void $

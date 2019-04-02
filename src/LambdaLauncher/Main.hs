@@ -24,7 +24,11 @@ import GI.Gtk
   , Window(..)
   , WindowType (..)
   , WindowPosition(..)
+  , Image (..)
   , getEntryText
+  , imageNewFromIconName
+  , imageNewFromStock
+  , setButtonImage
   )
 
 import qualified GI.Gtk as Gtk
@@ -95,12 +99,21 @@ searchView Configuration {..} State {results} =
     buildResults res =
       Vector.fromList $
       map
-        (\(Action r _ a) ->
-           widget
-             Button
-             [ #label := (r `cutOffAt` maxChars )
-             , on #clicked $ Activated a
-             ])
+        (\case
+            (Action r (Just i) _ a) ->
+              widget
+              Button
+              [ #label := (r `cutOffAt` maxChars)
+              , #image := i
+              , on #clicked $ Activated a
+              ]
+            (Action r _ _ a) ->
+              widget
+              Button
+              [ #label := (r `cutOffAt` maxChars)
+              , on #clicked $ Activated a
+              ]
+        )
         res
     toQueryChangedEvent :: SearchEntry -> IO Event
     toQueryChangedEvent w = QueryChanged <$> getEntryText w

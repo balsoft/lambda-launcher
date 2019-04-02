@@ -39,7 +39,7 @@ findWindows node = concat (mconcat . map findWindows <$> nNodes node)
 
 windowToResults :: Window -> LambdaLauncher.Types.Result
 windowToResults Window{..} =
-  Action wName 2 $ callProcess "swaymsg" ["[con_id=" ++ show wId ++ "] focus"]
+  Action wName Nothing 2 $ callProcess "swaymsg" ["[con_id=" ++ show wId ++ "] focus"]
 
 sway :: Plugin
 sway s = do

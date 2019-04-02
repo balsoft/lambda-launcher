@@ -82,5 +82,5 @@ wiki s = do
   let res = (\x -> (T.pack $ htmlToPlain $ snippet x, T.pack . show $ pageid x)) <$> s
   return $
     (\(text, curid) ->
-       Action text 4 $
+       Action text Nothing 4 $
        openUrlAction $ T.append "https://en.wikipedia.org/?curid=" curid) <$> res

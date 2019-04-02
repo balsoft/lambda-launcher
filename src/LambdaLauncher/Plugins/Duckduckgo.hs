@@ -13,6 +13,8 @@ import Data.Maybe (catMaybes)
 import Data.Monoid ((<>))
 import Data.Text (Text)
 import Network.HTTP.Req
+import GI.Gtk (Image, imageNewFromFile)
+import Data.ByteString (writeFile)
 
 data RelatedTopic = RelatedTopic
   { text :: Maybe Text
@@ -39,18 +41,30 @@ fetchDDGAPI s =
       ("format" =: ("json" :: String))
     liftIO $ return $ responseBody bs
 
+fetchFavicon :: IO String
+fetchFavicon = do
+  Data.ByteString.writeFile file
+    =<< (runReq def $ do
+            bs <-
+              req GET (https "duckduckgo.com" /: "favicon.ico") NoReqBody bsResponse mempty
+            liftIO $ return $ responseBody bs)
+  return file
+  where file = "/tmp/ddg.ico"
+  
 getDDGInstantResponse :: Text -> IO DDGResponse
 getDDGInstantResponse s = do
   Right b <- eitherDecodeStrict <$> fetchDDGAPI s
   return b
 
-topicToResult :: RelatedTopic -> Maybe LambdaLauncher.Types.Result
-topicToResult (RelatedTopic (Just t) (Just u)) =
-  Just $ Action t 2 $ openUrlAction u
-topicToResult _ = Nothing
+topicToResult :: Image -> RelatedTopic -> Maybe LambdaLauncher.Types.Result
+topicToResult i (RelatedTopic (Just t) (Just u)) =
+  Just $ Action t (Just i) 2 $ openUrlAction u
+topicToResult _ _ = Nothing
 
 duckduckgo :: Plugin
 duckduckgo s | s == "" = mempty
              | otherwise = do
+                 imageFile <- fetchFavicon
+                 image <- imageNewFromFile imageFile
                  DDGResponse r <- getDDGInstantResponse s
-                 return $ catMaybes $ topicToResult <$> r
+                 return $ catMaybes $ (topicToResult image) <$> r

@@ -11,7 +11,7 @@ import qualified Data.Text as T
 
 
 copyAction :: Priority -> Text -> Result
-copyAction p s = Action s p $ void $ callProcess "wl-copy" [T.unpack s]
+copyAction p s = Action s Nothing  p $ void $ callProcess "wl-copy" [T.unpack s]
 
 openUrlAction :: Text -> IO ()
 openUrlAction s = void $ spawnProcess "xdg-open" [T.unpack s]

@@ -2,14 +2,19 @@ module LambdaLauncher.Types where
 
 import GHC.Int (Int32)
 import Data.Text (Text)
+import GI.Gtk.Objects (Image)
+
+instance Eq Image 
 
 type Priority = Integer
 
-data Result = Action
-  { shownText :: Text
-  , priority :: Priority
-  , action :: IO ()
-  }
+data Result
+  = Action
+    { shownText :: Text
+    , image :: Maybe Image
+    , priority :: Priority
+    , action :: IO ()
+    }
 
 type Plugin = Text -> IO [Result]
 

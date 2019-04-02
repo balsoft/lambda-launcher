@@ -9,5 +9,5 @@ google :: Plugin
 google s =
   return $
   pure $
-  Action (T.append "Google " s) 2 $
+  Action (T.append "Google " s) Nothing 2 $
   openUrlAction $ T.append "https://google.com/search?q=" s

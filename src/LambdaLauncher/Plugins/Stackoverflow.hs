@@ -56,5 +56,5 @@ stackoverflow :: Plugin
 stackoverflow s =
   fmap
     (\(Question t i) ->
-       Action t 5 $ openUrlAction $ T.append "https://stackoverflow.com/q/" (T.pack $ show i)) <$>
+       Action t Nothing 5 $ openUrlAction $ T.append "https://stackoverflow.com/q/" (T.pack $ show i)) <$>
   findSOQuestions s

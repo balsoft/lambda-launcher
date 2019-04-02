@@ -25,5 +25,5 @@ command s = do
   where
     result :: Text -> IO Result
     result x = pure
-      $ Action (T.append "Run command " $ max x s) 1
+      $ Action (T.append "Run command " $ max x s) Nothing 1
       $ void $ spawnCommand $ T.unpack $ max s x
