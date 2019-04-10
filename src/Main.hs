@@ -16,6 +16,7 @@ plugins =
   , trigger wmctrl "win "
   , trigger files "file "
   , command
+  , trigger kill "kill "
   , triggerStrict wiki "wiki "
   , triggerStrict duckduckgo "ddg "
   , triggerStrict stackoverflow "so "
@@ -31,4 +32,3 @@ conf = Configuration
 
 main :: IO ()
 main = runApp conf plugins
-

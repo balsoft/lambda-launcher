@@ -35,6 +35,7 @@ Edit `configuration` top-level binding in `src/Main.hs`. The `Configuration` typ
 | Emacs         | em      | open emacs in a directory from ~/projects       | emacs                 | nix-shell             |
 | Files         | file    | list and open files                             |                       |                       |
 | Google        | g       | search some text through google's web interface |                       |                       |
+| Kill          | kill    | kill other processes                            | pkill, ps             |                       |
 | Qalc          | q       | use libqalculate to evaluate expressions        | qalc                  |                       |
 | Stackoverflow | so      | search for questions with similar titles        |                       |                       |
 | Sway          | sw      | list and focus windows on sway                  | swaymsg               |                       |

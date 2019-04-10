@@ -4,6 +4,7 @@ module LambdaLauncher.Plugins
   , emacs
   , files
   , google
+  , kill
   , qalc
   , stackoverflow
   , sway
@@ -17,6 +18,7 @@ import LambdaLauncher.Plugins.Duckduckgo
 import LambdaLauncher.Plugins.Emacs
 import LambdaLauncher.Plugins.Files
 import LambdaLauncher.Plugins.Google
+import LambdaLauncher.Plugins.Kill
 import LambdaLauncher.Plugins.Qalc
 import LambdaLauncher.Plugins.Stackoverflow
 import LambdaLauncher.Plugins.Sway
