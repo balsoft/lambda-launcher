@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings #-}
 module LambdaLauncher.Plugins.Files where
 
 import LambdaLauncher.Types

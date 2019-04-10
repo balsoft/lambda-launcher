@@ -1,6 +1,5 @@
 module LambdaLauncher.Plugins.Wmctrl where
 
-import Data.List (isInfixOf)
 import System.Process (callProcess, readProcess)
 import LambdaLauncher.Types
 import qualified Data.Text as T

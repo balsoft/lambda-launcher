@@ -6,6 +6,10 @@
 {-# LANGUAGE OverloadedLabels #-}
 {-# LANGUAGE OverloadedLists #-}
 {-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TypeApplications #-}
 
 module LambdaLauncher.Main ( runApp ) where
 
@@ -22,7 +26,6 @@ import GI.Gtk
   , ScrolledWindow(..)
   , SearchEntry(..)
   , Window(..)
-  , WindowType (..)
   , WindowPosition(..)
   , getEntryText
   )

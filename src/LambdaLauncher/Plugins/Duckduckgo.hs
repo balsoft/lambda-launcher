@@ -1,14 +1,13 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module LambdaLauncher.Plugins.Duckduckgo where
 
 import LambdaLauncher.Plugins.Support
 import LambdaLauncher.Types
 
-import Control.Monad (forM)
 import Control.Monad.IO.Class (liftIO)
 import Data.Aeson
-import Data.ByteString.Char8 (pack)
 import Data.Default.Class
-import Data.List (intersperse)
 import Data.Maybe (catMaybes)
 import Data.Monoid ((<>))
 import Data.Text (Text)

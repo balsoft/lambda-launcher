@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module LambdaLauncher.Plugins.Command where
 
 import LambdaLauncher.Types

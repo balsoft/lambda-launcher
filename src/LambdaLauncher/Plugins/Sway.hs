@@ -1,9 +1,9 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE RecordWildCards #-}
 
 module LambdaLauncher.Plugins.Sway where
 
 import Data.Aeson
-import Data.List (isInfixOf)
 import Data.Text (Text, pack)
 import Data.Text.Encoding (encodeUtf8)
 import GHC.Generics

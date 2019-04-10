@@ -1,4 +1,6 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards #-}
 
 module LambdaLauncher.Plugins.Wiki where
 
@@ -6,17 +8,14 @@ import LambdaLauncher.Types
 
 import LambdaLauncher.Plugins.Support
 
-import Control.Monad
 import Control.Monad.IO.Class
 import Data.Aeson
 import Data.ByteString (ByteString)
-import Data.ByteString.Char8 (pack, putStrLn)
 import Data.Default.Class
 import Data.Monoid ((<>))
 import Data.Text (Text)
 import GHC.Generics
 import Network.HTTP.Req
-import System.Process (callProcess)
 
 import qualified Data.Text as T
 

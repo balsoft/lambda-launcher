@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module LambdaLauncher.Plugins.Emacs where
 
 import Control.Monad (void)

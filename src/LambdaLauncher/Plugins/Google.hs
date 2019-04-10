@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module LambdaLauncher.Plugins.Google where
 
 import LambdaLauncher.Types

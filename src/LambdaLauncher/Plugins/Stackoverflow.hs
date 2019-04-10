@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE PartialTypeSignatures #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module LambdaLauncher.Plugins.Stackoverflow where
 
@@ -7,7 +8,6 @@ import LambdaLauncher.Types
 
 import LambdaLauncher.Plugins.Support
 
-import Control.Monad
 import Control.Monad.IO.Class
 import Data.Aeson
 import Data.ByteString (ByteString)

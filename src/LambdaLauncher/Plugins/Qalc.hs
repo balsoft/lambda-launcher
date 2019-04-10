@@ -1,6 +1,7 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module LambdaLauncher.Plugins.Qalc where
 
-import Data.List (isInfixOf)
 import Data.Maybe (listToMaybe)
 import LambdaLauncher.Plugins.Support (copyAction)
 import System.Process (readProcess)
