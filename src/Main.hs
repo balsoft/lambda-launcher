@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Main where
 
 import LambdaLauncher.Main
@@ -24,7 +26,8 @@ conf = Configuration
   { width = 500
   , maxHeight = 300
   , maxChars = 60
-  , showBorder = False }
+  , showBorder = False 
+  }
 
 main :: IO ()
 main = runApp conf plugins
