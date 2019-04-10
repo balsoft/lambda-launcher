@@ -95,16 +95,13 @@ searchView Configuration {..} State {results} =
         , on #stopSearch Closed
         , afterCreated (\w -> void $ Gtk.on w #map $ #grabFocus w)
         ]
-    buildResults res =
-      Vector.fromList $
-      map
-        (\(Action r _ a) ->
-           widget
-             Button
-             [ #label := (r `cutOffAt` maxChars )
-             , on #clicked $ Activated a
-             ])
-        res
+    buildResults res = actionToButton <$> Vector.fromList res
+    actionToButton (Action r _ a) =
+      widget
+      Button
+      [ #label := (r `cutOffAt` maxChars )
+      , on #clicked $ Activated a
+      ]
     toQueryChangedEvent :: SearchEntry -> IO Event
     toQueryChangedEvent w = QueryChanged <$> getEntryText w
 
