@@ -1,4 +1,4 @@
-{ nixpkgs ? import <nixpkgs> {}, compiler ? "default", doBenchmark ? false }:
+{ nixpkgs ? import (builtins.fetchGit {url = "https://github.com/nixos/nixpkgs"; rev = "acbdaa569f4ee387386ebe1b9e60b9f95b4ab21b"; }) {}, compiler ? "default", doBenchmark ? false }:
 
 let
 
