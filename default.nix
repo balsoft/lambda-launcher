@@ -16,8 +16,6 @@ let
         src = pkgs.lib.sourceByRegex ./. [".*\.cabal$" ".*src.*"];
         isLibrary = false;
         isExecutable = true;
-        doHaddock = true;
-        haddockFlags = ["--executable" pname];
         executableHaskellDepends = [
           aeson async base bytestring data-default-class directory filepath
           gi-gdk gi-glib gi-gobject gi-gtk gi-gtk-declarative
