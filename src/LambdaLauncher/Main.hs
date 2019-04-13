@@ -36,7 +36,7 @@ import GI.Gtk.Declarative.App.Simple
 import System.IO.Unsafe (unsafeInterleaveIO)
 
 import Data.Functor (($>))
-import Data.Text (Text)
+import Data.Text (Text, lines)
 import Data.List (genericLength, sortOn)
 
 import LambdaLauncher.Types
@@ -56,6 +56,8 @@ data State = State
   { query :: Text
   , results :: [Result]
   }
+
+
 
 cutOffAt :: Text -> Int -> Text
 s `cutOffAt` i =
@@ -99,7 +101,7 @@ searchView Configuration {..} State {results} =
     actionToButton (Action r _ a) =
       widget
       Button
-      [ #label := (r `cutOffAt` maxChars )
+      [ #label := ((head $ Data.Text.lines r) `cutOffAt` maxChars)
       , on #clicked $ Activated a
       ]
     toQueryChangedEvent :: SearchEntry -> IO Event

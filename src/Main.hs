@@ -17,6 +17,7 @@ plugins =
   , trigger files "file "
   , command
   , trigger kill "kill "
+  , triggerStrict googletranslate "tr "
   , triggerStrict wiki "wiki "
   , triggerStrict duckduckgo "ddg "
   , triggerStrict stackoverflow "so "
