@@ -14,7 +14,7 @@ executable lambda-launcher
                       , gi-glib == 2.*
                       , gi-gtk == 3.*
                       , gi-gtk-declarative == 0.*
-                      , gi-gtk-declarative-app-simple == 0.*
+                      , gi-gtk-declarative-app-simple == 0.4.*
                       , gi-gdk == 3.*
                       , haskell-gi == 0.*
                       , haskell-gi-base == 0.*
@@ -39,5 +39,6 @@ executable lambda-launcher
                       , LambdaLauncher.Plugins.Stackoverflow
                       , LambdaLauncher.Plugins.Wmctrl
                       , LambdaLauncher.Plugins.Duckduckgo
+                      , LambdaLauncher.Plugins.Kill
   default-language:     Haskell2010
   ghc-options:          -threaded
