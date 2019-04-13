@@ -1,4 +1,4 @@
-{ nixpkgs ? import <nixpkgs> {}, compiler ? "default", doBenchmark ? false }:
+{ nixpkgs ? import (builtins.fetchGit {url = "https://github.com/nixos/nixpkgs"; rev = "acbdaa569f4ee387386ebe1b9e60b9f95b4ab21b"; }) {}, compiler ? "default", doBenchmark ? false }:
 
 let
 
@@ -16,8 +16,6 @@ let
         src = pkgs.lib.sourceByRegex ./. [".*\.cabal$" ".*src.*"];
         isLibrary = false;
         isExecutable = true;
-        doHaddock = true;
-        haddockFlags = ["--executable" pname];
         executableHaskellDepends = [
           aeson async base bytestring data-default-class directory filepath
           gi-gdk gi-glib gi-gobject gi-gtk gi-gtk-declarative
