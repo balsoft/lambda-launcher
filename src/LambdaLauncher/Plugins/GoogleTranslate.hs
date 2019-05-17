@@ -11,7 +11,7 @@ import Data.Maybe (maybeToList)
 import Data.Default.Class
 import Data.Monoid ((<>))
 import Prelude hiding (words, concat)
-import Data.Text (Text, words)
+import Data.Text (Text, words, intersperse)
 import Network.HTTP.Req
 import Data.Vector ((!?))
 
@@ -48,7 +48,7 @@ googletranslate :: Plugin
 googletranslate s
   | length w >= 3 =
     fmap (copyAction 1) . fmap getText . maybeToList <$>
-    translate (w !! 0) (w !! 1) (mconcat $ drop 2 w)
+    translate (w !! 0) (w !! 1) (intersperse ' ' $ mconcat $ drop 2 w)
   | otherwise = mempty
   where w = words s
   
