@@ -4,7 +4,7 @@
   }) { }), ... }@args:
 let
   lambda-launcher-unwrapped =
-  pkgs.haskellPackages.callPackage ./lambda-launcher.nix args;
+  pkgs.haskellPackages.callPackage ./lambda-launcher.nix {};
   lambda-launcher =
   pkgs.callPackage ./wrapper.nix { inherit lambda-launcher-unwrapped; };
 in if builtins.getEnv "IN_NIX_SHELL" != "" then
