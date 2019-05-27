@@ -3,7 +3,8 @@
 lambda-launcher-unwrapped.overrideAttrs (old: {
   buildInputs = old.buildInputs ++ [makeWrapper];
   postInstall = ''
-    makeWrapper $out/bin/lambda-launcher $wrapperfile --prefix PATH : ${
+    cp $out/bin/lambda-launcher $out/bin/.lambda-launcher-unwrapped
+    makeWrapper $out/bin/.lambda-launcher-unwrapped $out/bin/lambda-launcher --prefix PATH : ${
       lib.makeBinPath plugins
     }
   '';
