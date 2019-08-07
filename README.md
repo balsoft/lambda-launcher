@@ -52,11 +52,6 @@ If a plugin doesn't work, make sure you've installed the corresponding dependenc
  -  Don't forget to add `yourPlugin` to `plugins` list
  -  Send a PR!
 
-## Side note
-
-I'm very new to Haskell, so any corrections to code
-style/architecture/etc are welcome. Send issues.
-
 
 ## Code of conduct
 
