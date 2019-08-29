@@ -43,7 +43,6 @@ import LambdaLauncher.Types
 
 import qualified Data.Text as T
 
-
 data Event
   = QueryChanged Text
   | ResultAdded Text
@@ -56,7 +55,6 @@ data State = State
   { query :: Text
   , results :: [Result]
   }
-
 
 
 cutOffAt :: Text -> Int -> Text

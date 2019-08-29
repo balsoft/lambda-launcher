@@ -34,15 +34,11 @@ translate from to text =
       "client" =: ("gtx" :: String)
     <>"sl" =: from
     <>"tl" =: to
-    <>"hl" =: to
     <>"dt" =: ("t" :: String)
     <>"ie" =: ("UTF-8" :: String)
     <>"oe" =: ("UTF-8" :: String)
-    <>"kc" =: (7 :: Int)
     <>"q" =: text
   liftIO $ pure $ responseBody bs)
-
-
 
 googletranslate :: Plugin
 googletranslate s

@@ -29,6 +29,7 @@ instance FromJSON RelatedTopic where
 instance FromJSON DDGResponse where
   parseJSON (Object o) = DDGResponse <$> o .: "RelatedTopics"
   parseJSON _ = mempty
+  
 
 fetchDDGAPI s =
   runReq def $ do

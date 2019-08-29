@@ -14,11 +14,11 @@ import qualified Data.Text as T
 
 
 data Node = Node
-  { nName :: Maybe Text
-  , nApp_id :: Maybe Text
-  , nId :: Integer
-  , nPid :: Maybe Integer
-  , nNodes :: Maybe [Node]
+  { name :: Maybe Text
+  , app_id :: Maybe Text
+  , id :: Integer
+  , pid :: Maybe Integer
+  , nodes :: Maybe [Node]
   } deriving (Show, Generic)
 
 data Window = Window
@@ -32,10 +32,13 @@ instance FromJSON Node
 
 instance ToJSON Node
 
+-- | Find windows in a tree starting from Node
 findWindows :: Node -> [Window]
+-- If this node is a window, it must have a name and PID associated with it
 findWindows (Node (Just name) nApp_id nId (Just pid) _) =
   [Window name nApp_id nId pid]
-findWindows node = concat (mconcat . map findWindows <$> nNodes node)
+-- Otherwise, look at node's children recursively
+findWindows node = concat (mconcat . map findWindows <$> nodes node)
 
 windowToResults :: Window -> LambdaLauncher.Types.Result
 windowToResults Window{..} =

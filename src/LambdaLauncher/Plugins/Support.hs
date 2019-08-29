@@ -16,7 +16,7 @@ copyAction p s = Action s p $ void $ callProcess "wl-copy" [T.unpack s]
 openUrlAction :: Text -> IO ()
 openUrlAction s = void $ spawnProcess "xdg-open" [T.unpack s]
 
-triggerOr :: IO [Result] -> (Text -> IO [Result]) -> Text -> Text -> IO [Result]
+triggerOr :: IO [Result] -> Plugin -> Text -> Text -> IO [Result]
 triggerOr o plug trig query =
   if trig `T.isPrefixOf` query
     then fmap (\r -> r {priority = 0}) <$> plug (T.drop (T.length trig) query)
