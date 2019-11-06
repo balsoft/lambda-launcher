@@ -28,7 +28,7 @@ command query = do
     commandList <- mconcat <$> mapM listDirectory existEnvs
     let s = T.unpack query
     let cmd = head $ words s
-    let args = ' ':(intersperse ' ' $ mconcat (tail $ words s))
+    let args = ' ':(unwords $ tail $ words s)
     let commands =
           map T.pack $ fmap (++ args) $ simpleFilter cmd commandList
     mapM result $ take 3 $ removeSame [] commands

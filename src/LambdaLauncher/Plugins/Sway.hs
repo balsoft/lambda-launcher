@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module LambdaLauncher.Plugins.Sway where
 
@@ -9,6 +10,7 @@ import Data.Text.Encoding (encodeUtf8)
 import GHC.Generics
 import System.Process (callProcess, readProcess)
 import LambdaLauncher.Types
+import qualified Text.Fuzzy as F
 
 import qualified Data.Text as T
 
@@ -42,13 +44,13 @@ findWindows node = concat (mconcat . map findWindows <$> nodes node)
 
 windowToResults :: Window -> LambdaLauncher.Types.Result
 windowToResults Window{..} =
-  Action wName 2 $ callProcess "swaymsg" ["[con_id=" ++ show wId ++ "] focus"]
+  Action ("Switch to " <> wName) 2 $ callProcess "swaymsg" ["[con_id=" ++ show wId ++ "] focus"]
 
 sway :: Plugin
 sway s = do
   tree <- encodeUtf8 . pack <$> readProcess "swaymsg" ["-t", "get_tree"] ""
   pure $ concat $
     map windowToResults
-      . filter (\Window{..} -> s `T.isInfixOf` wName)
+      . (\v -> F.original <$> F.filter s v "" "" wName False)
       . findWindows
       <$> decodeStrict tree
