@@ -24,6 +24,7 @@ executable lambda-launcher
                       , filepath == 1.*
                       , req == 1.*
                       , data-default-class == 0.*
+                      , fuzzy == 0.1.*
   hs-source-dirs:       src
   other-modules:        LambdaLauncher.Types
                       , LambdaLauncher.Main

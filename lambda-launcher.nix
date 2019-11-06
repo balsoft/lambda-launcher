@@ -1,5 +1,5 @@
 { mkDerivation, aeson, async, base, bytestring, data-default-class
-, directory, filepath, gi-gdk, gi-glib, gi-gobject, gi-gtk
+, directory, filepath, fuzzy, gi-gdk, gi-glib, gi-gobject, gi-gtk
 , gi-gtk-declarative, gi-gtk-declarative-app-simple, haskell-gi
 , haskell-gi-base, process, req, stdenv, text, vector
 }:
@@ -11,7 +11,7 @@ mkDerivation {
   isExecutable = true;
   executableHaskellDepends = [
     aeson async base bytestring data-default-class directory filepath
-    gi-gdk gi-glib gi-gobject gi-gtk gi-gtk-declarative
+    fuzzy gi-gdk gi-glib gi-gobject gi-gtk gi-gtk-declarative
     gi-gtk-declarative-app-simple haskell-gi haskell-gi-base process
     req text vector
   ];

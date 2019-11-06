@@ -7,7 +7,7 @@ import System.Process (spawnCommand)
 import System.Environment (getEnv)
 import System.FilePath.Posix (splitSearchPath)
 import System.Directory (doesDirectoryExist, listDirectory)
-import Data.List (isPrefixOf)
+import Text.Fuzzy (simpleFilter)
 import Control.Monad (filterM, void)
 import Data.Text (Text)
 
@@ -19,10 +19,9 @@ command query = do
     existEnvs <- filterM doesDirectoryExist envs
     commandList <- mconcat <$> mapM listDirectory existEnvs
     let s = T.unpack query
-    let commands = map T.pack
-                     $ filter (\c -> s `isPrefixOf` c
-                                  || c `isPrefixOf` s)
-                     commandList
+    let command = head $ words s
+    let commands =
+          map T.pack $ (++ tail s) <$> simpleFilter command commandList
     mapM result $ take 3 commands
   where
     result :: Text -> IO Result
