@@ -14,14 +14,7 @@ import Data.Text (Text)
 
 import qualified Data.Text as T
 
-removeSame :: Eq a => [a] -> [a] -> [a]
-removeSame found (x:xs) =
-  if x `elem` found
-  then removeSame found xs
-  else removeSame (x:found) xs
-removeSame found _ = found
-
-command :: Text -> IO [Result]
+command :: Plugin
 command query = do
     envs <- splitSearchPath <$> getEnv "PATH"
     existEnvs <- filterM doesDirectoryExist envs
@@ -30,8 +23,8 @@ command query = do
     let cmd = head $ words s
     let args = ' ':(unwords $ tail $ words s)
     let commands =
-          map T.pack $ fmap (++ args) $ simpleFilter cmd commandList
-    mapM result $ take 3 $ removeSame [] commands
+          map T.pack $ fmap (++ args) $ simpleFilter cmd $ filter (not . (=='.') . head) commandList
+    mapM result commands
   where
     result :: Text -> IO Result
     result x = pure

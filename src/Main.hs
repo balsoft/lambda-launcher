@@ -15,7 +15,7 @@ plugins =
   , trigger sway "sw "
   , trigger wmctrl "win "
   , trigger files "file "
-  , command
+  , trigger command "$ "
   , trigger kill "kill "
   , triggerStrict googletranslate "tr "
   , triggerStrict wiki "wiki "
@@ -29,7 +29,7 @@ conf = Configuration
   , maxHeight = 300
   , maxChars = 60
   , showBorder = False 
-  }
+  , maxItemsPerPlugin = 4 }
 
 main :: IO ()
 main = runApp conf plugins

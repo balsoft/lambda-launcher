@@ -56,6 +56,15 @@ data State = State
   , results :: [Result]
   }
 
+instance Eq Result where
+  a == b = shownText a == shownText b
+
+removeSame :: Eq a => [a] -> [a] -> [a]
+removeSame found (x:xs) =
+  if x `elem` found
+  then removeSame found xs
+  else removeSame (x:found) xs
+removeSame found _ = found
 
 cutOffAt :: Text -> Int -> Text
 s `cutOffAt` i =
@@ -113,20 +122,20 @@ updateResults q (result:results) = do
     Nothing -> updateResults q results
     Just f -> return $ Just $ ResultAdded q f results
 
-update' :: [Plugin] -> State -> Event -> Transition State Event
-update' _ state (QueryChanged "") =
+update' :: Configuration -> [Plugin] -> State -> Event -> Transition State Event
+update' _ _ state (QueryChanged "") =
   Transition state {query = "", results = []} $ return Nothing
-update' plugins state (QueryChanged s) =
+update' _ plugins state (QueryChanged s) =
   Transition state {query = s, results = []} $
   updateResults s $ ($ s) <$> plugins
-update' _ state (ResultAdded q x xs) =
+update' Configuration {..} _ state (ResultAdded q x xs) =
   Transition
     state
       { results =
           if anyTriggered
-            then x
+            then newResults
             else if queryMatch
-                   then sortOn priority $ (results state) ++ x
+                   then sortOn priority $ (results state) ++ take maxItemsPerPlugin newResults
                    else results state
       } $
   if queryMatch && (not anyTriggered)
@@ -135,8 +144,9 @@ update' _ state (ResultAdded q x xs) =
   where
     queryMatch = q == query state
     anyTriggered = any ((== 0) . priority) x
-update' _ state (Activated a) = Transition state $ a $> Just Closed
-update' _ _ Closed = Exit
+    newResults = removeSame [] x
+update' _ _ state (Activated a) = Transition state $ a $> Just Closed
+update' _ _ _ Closed = Exit
 
 runApp :: Configuration -> [Plugin] -> IO ()
 runApp c p =
@@ -144,7 +154,7 @@ runApp c p =
   run
     App
       { view = searchView c
-      , update = update' p
+      , update = update' c p
       , inputs = []
       , initialState = State "" []
       }
