@@ -15,7 +15,7 @@ import Data.Monoid ((<>))
 import Data.Text (Text)
 import GHC.Generics
 import Network.HTTP.Req
-import Data.Maybe (fromJust)
+import Data.Maybe (maybeToList)
 
 data Response = Response
   { word :: Text
@@ -60,4 +60,4 @@ getResults r = mkResult <$> texts
     m = meaning r
 
 dictionary :: Plugin
-dictionary q = getResults . head . fromJust . decodeStrict <$> getDictionaryData q
+dictionary q = getResults . head . maybeToList . decodeStrict <$> getDictionaryData q

@@ -20,7 +20,7 @@ plugins =
   , triggerStrict googletranslate "tr "
   , triggerStrict wiki "wiki "
   , triggerStrict duckduckgo "ddg "
-  , trigger dictionary "def "
+  , triggerStrict dictionary "def "
   , triggerStrict stackoverflow "so "
   ]
 
