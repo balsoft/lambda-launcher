@@ -17,6 +17,7 @@ import GHC.Generics
 import Network.HTTP.Req
 import Data.Maybe (maybeToList)
 
+
 data Response = Response
   { word :: Text
   , phonetic :: Text
@@ -56,8 +57,8 @@ getResults r = mkResult <$> texts
   where
     mkResult = copyAction 2 
     texts = definition <$> definitions
-    Just definitions = noun m <> verb m <> adverb m <> adjective m <> exclamation m
+    definitions = mconcat $ maybeToList $ (noun <> verb <> adverb <> adjective <> exclamation) m
     m = meaning r
 
 dictionary :: Plugin
-dictionary q = getResults . head . maybeToList . decodeStrict <$> getDictionaryData q
+dictionary q = mconcat . mconcat . maybeToList . (fmap (map getResults)) <$> decodeStrict  <$> getDictionaryData q
