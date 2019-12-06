@@ -117,7 +117,7 @@ searchView Configuration {..} State {results} =
 updateResults :: Text -> [IO [Result]] -> IO (Maybe Event)
 updateResults _ [] = return Nothing
 updateResults q (result:results) = do
-  first <- unsafeInterleaveIO $ optional $ result
+  first <- {- unsafeInterleaveIO $ -} optional $ result
   case first of
     Nothing -> updateResults q results
     Just f -> return $ Just $ ResultAdded q f results
