@@ -33,7 +33,9 @@ import GI.Gtk
 import qualified GI.Gtk as Gtk
 import GI.Gtk.Declarative
 import GI.Gtk.Declarative.App.Simple
-import System.IO.Unsafe (unsafeInterleaveIO)
+
+import Control.Concurrent
+import Control.Concurrent.Chan
 
 import Data.Functor (($>))
 import Data.Text (Text, lines)
@@ -47,7 +49,7 @@ data Event
   = QueryChanged Text
   | ResultAdded Text
                 [Result]
-                [IO [Result]]
+                (Chan [Result])
   | Activated (IO ())
   | Closed
 
@@ -114,21 +116,21 @@ searchView Configuration {..} State {results} =
     toQueryChangedEvent :: SearchEntry -> IO Event
     toQueryChangedEvent w = QueryChanged <$> getEntryText w
 
-updateResults :: Text -> [IO [Result]] -> IO (Maybe Event)
-updateResults _ [] = return Nothing
-updateResults q (result:results) = do
-  first <- {- unsafeInterleaveIO $ -} optional $ result
-  case first of
-    Nothing -> updateResults q results
-    Just f -> return $ Just $ ResultAdded q f results
+runPlugin :: Chan [Result] -> Text -> Plugin -> IO ()
+runPlugin chan q plugin = void $ forkIO $ plugin q >>= writeChan chan
+
+updateResults :: Text -> Chan [Result] -> IO (Maybe Event)
+updateResults q chan = fmap (\x -> ResultAdded q x chan) <$> (optional $ readChan chan)
 
 update' :: Configuration -> [Plugin] -> State -> Event -> Transition State Event
 update' _ _ state (QueryChanged "") =
   Transition state {query = "", results = []} $ return Nothing
 update' _ plugins state (QueryChanged s) =
-  Transition state {query = s, results = []} $
-  updateResults s $ ($ s) <$> plugins
-update' Configuration {..} _ state (ResultAdded q x xs) =
+  Transition state {query = s, results = []} $ do
+    chan <- newChan
+    void $ sequence $ runPlugin chan s <$> plugins
+    updateResults s chan
+update' Configuration {..} _ state (ResultAdded q x chan) =
   Transition
     state
       { results =
@@ -139,12 +141,13 @@ update' Configuration {..} _ state (ResultAdded q x xs) =
                    else results state
       } $
   if queryMatch && (not anyTriggered)
-    then updateResults q xs
+    then updateResults q chan
     else return Nothing
   where
     queryMatch = q == query state
-    anyTriggered = any ((== 0) . priority) x
+    anyTriggered = any  ((== 0) . priority) newResults
     newResults = removeSame [] x
+    
 update' _ _ state (Activated a) = Transition state $ a $> Just Closed
 update' _ _ _ Closed = Exit
 
