@@ -128,7 +128,7 @@ update' _ _ state (QueryChanged "") =
 update' _ plugins state (QueryChanged s) =
   Transition state {query = s, results = []} $ do
     chan <- newChan
-    void $ sequence $ runPlugin chan s <$> plugins
+    mapM_ (runPlugin chan s) plugins
     updateResults s chan
 update' Configuration {..} _ state (ResultAdded q x chan) =
   Transition
