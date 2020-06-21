@@ -45,7 +45,7 @@ instance FromJSON Definition
 
 getDictionaryData :: Text -> IO ByteString
 getDictionaryData s =
-  runReq def $ do
+  runReq defaultHttpConfig $ do
     bs <-
       req GET (https "googledictionaryapi.eu-gb.mybluemix.net") NoReqBody bsResponse $
       "lang" =: ("en" :: Text) <>

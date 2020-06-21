@@ -37,7 +37,7 @@ instance FromJSON Question
 findSOQuestions :: Text -> IO [Question]
 findSOQuestions s =
   concat . maybeToList . fmap items . decodeStrict <$>
-  ((runReq def $ do
+  ((runReq defaultHttpConfig $ do
       bs <-
         req
           GET

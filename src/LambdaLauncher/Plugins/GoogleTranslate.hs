@@ -29,7 +29,7 @@ newtype GoogleTranslateResult = GoogleTranslateResult {getText :: Text}
 translate :: Text -> Text -> Text -> IO (Maybe GoogleTranslateResult)
 translate from to text =
   decodeStrict <$>
-  (runReq def $ do
+  (runReq defaultHttpConfig $ do
   bs <-
     req GET (https "translate.googleapis.com" /: "translate_a" /: "single") NoReqBody bsResponse $
       "client" =: ("gtx" :: String)

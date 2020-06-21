@@ -104,7 +104,6 @@ searchView Configuration {..} State {results} =
         SearchEntry
         [ onM #searchChanged toQueryChangedEvent
         , on #stopSearch Closed
-        , afterCreated (\w -> void $ Gtk.on w #map $ #grabFocus w)
         ]
     buildResults res = actionToButton <$> Vector.fromList res
     actionToButton (Action r _ a) =

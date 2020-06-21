@@ -32,7 +32,7 @@ instance FromJSON DDGResponse where
   
 
 fetchDDGAPI s =
-  runReq def $ do
+  runReq defaultHttpConfig $ do
     bs <-
       req GET (https "api.duckduckgo.com") NoReqBody bsResponse $
       ("q" =: s) <>

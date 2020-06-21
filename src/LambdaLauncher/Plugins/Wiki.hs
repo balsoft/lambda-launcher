@@ -64,7 +64,7 @@ htmlToPlain = replaceAmps . removeTags
 
 getWikipediaData :: Text -> IO ByteString
 getWikipediaData s =
-  runReq def $ do
+  runReq defaultHttpConfig $ do
     bs <-
       req GET (https "wikipedia.org" /: "w" /: "api.php") NoReqBody bsResponse $
       "action" =: ("query" :: String) <>
