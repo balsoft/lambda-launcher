@@ -2,17 +2,17 @@
   "nodes": {
     "nixpkgs": {
       "locked": {
-        "lastModified": 1592754205,
-        "narHash": "sha256-CQzP4Ur/lNGKQQCQlA5E44rmJmZcAparDDHAus5evH4=",
-        "owner": "balsoft",
+        "lastModified": 1592810120,
+        "narHash": "sha256-1xlD1OIs75DvjkWpyZcQBjdu/IgugspPpz8CsBeutaM=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "a50dd17125c2923e30ff06aeafdfee29b9be9ade",
+        "rev": "dbcd55844106241cf2d6aa0bc6ccb1613d1a5ed4",
         "type": "github"
       },
       "original": {
-        "owner": "balsoft",
-        "ref": "fix-gi-gtk-declarative",
+        "owner": "NixOS",
         "repo": "nixpkgs",
+        "rev": "dbcd55844106241cf2d6aa0bc6ccb1613d1a5ed4",
         "type": "github"
       }
     },
