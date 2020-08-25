@@ -1,7 +1,7 @@
 {
   description = "A launcher written in Haskell";
 
-  inputs.nixpkgs.url = github:NixOS/nixpkgs;
+  inputs.nixpkgs.url = github:NixOS/nixpkgs/dbcd55844106241cf2d6aa0bc6ccb1613d1a5ed4;
 
   outputs = { self, nixpkgs }: {
     packages = builtins.mapAttrs (_: pkgs: rec {
