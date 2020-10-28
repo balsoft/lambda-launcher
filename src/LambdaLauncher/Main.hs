@@ -36,7 +36,7 @@ import GI.Gtk.Declarative.App.Simple
 
 import Data.Functor (($>))
 import Data.Text (Text, lines)
-import Data.List (genericLength, sortOn)
+import Data.List (nub, genericLength, sortOn)
 
 import Streamly
 import qualified Streamly.Prelude as S
@@ -60,13 +60,6 @@ data State = State
 
 instance Eq Result where
   a == b = shownText a == shownText b
-
-removeSame :: Eq a => [a] -> [a] -> [a]
-removeSame found (x:xs) =
-  if x `elem` found
-  then removeSame found xs
-  else removeSame (x:found) xs
-removeSame found _ = found
 
 cutOffAt :: Text -> Int -> Text
 s `cutOffAt` i =
@@ -143,7 +136,7 @@ update' Configuration {..} _ state (ResultAdded q x chan) =
   where
     queryMatch = q == query state
     anyTriggered = any  ((== 0) . priority) newResults
-    newResults = removeSame [] x
+    newResults = nub x
 
 update' _ _ state (Activated a) = Transition state $ a $> Just Closed
 update' _ _ _ Closed = Exit
