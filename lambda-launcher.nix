@@ -1,7 +1,7 @@
 { mkDerivation, aeson, async, base, bytestring, data-default-class
 , directory, filepath, fuzzy, gi-gdk, gi-glib, gi-gobject, gi-gtk
 , gi-gtk-declarative, gi-gtk-declarative-app-simple, haskell-gi
-, haskell-gi-base, process, req, stdenv, text, vector
+, haskell-gi-base, process, req, stdenv, streamly, text, vector
 }:
 mkDerivation {
   pname = "lambda-launcher";
@@ -13,7 +13,7 @@ mkDerivation {
     aeson async base bytestring data-default-class directory filepath
     fuzzy gi-gdk gi-glib gi-gobject gi-gtk gi-gtk-declarative
     gi-gtk-declarative-app-simple haskell-gi haskell-gi-base process
-    req text vector
+    req streamly text vector
   ];
   license = "unknown";
   hydraPlatforms = stdenv.lib.platforms.none;

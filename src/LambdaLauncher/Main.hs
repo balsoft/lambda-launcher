@@ -30,16 +30,16 @@ import GI.Gtk
   , getEntryText
   )
 
-import qualified GI.Gtk as Gtk
+-- import qualified GI.Gtk as Gtk
 import GI.Gtk.Declarative
 import GI.Gtk.Declarative.App.Simple
-
-import Control.Concurrent
-import Control.Concurrent.Chan
 
 import Data.Functor (($>))
 import Data.Text (Text, lines)
 import Data.List (genericLength, sortOn)
+
+import Streamly
+import qualified Streamly.Prelude as S
 
 import LambdaLauncher.Types
 
@@ -49,7 +49,7 @@ data Event
   = QueryChanged Text
   | ResultAdded Text
                 [Result]
-                (Chan [Result])
+                (SerialT IO [Result])
   | Activated (IO ())
   | Closed
 
@@ -115,20 +115,18 @@ searchView Configuration {..} State {results} =
     toQueryChangedEvent :: SearchEntry -> IO Event
     toQueryChangedEvent w = QueryChanged <$> getEntryText w
 
-runPlugin :: Chan [Result] -> Text -> Plugin -> IO ()
-runPlugin chan q plugin = void $ forkIO $ plugin q >>= writeChan chan
+runPlugin :: Text -> Plugin -> IO (Maybe [Result])
+runPlugin q plugin = optional $ plugin q
 
-updateResults :: Text -> Chan [Result] -> IO (Maybe Event)
-updateResults q chan = fmap (\x -> ResultAdded q x chan) <$> (optional $ readChan chan)
+updateResults :: Text -> SerialT IO [Result] -> IO (Maybe Event)
+updateResults q s = fmap (uncurry $ ResultAdded q) <$> S.uncons s
 
 update' :: Configuration -> [Plugin] -> State -> Event -> Transition State Event
 update' _ _ state (QueryChanged "") =
   Transition state {query = "", results = []} $ return Nothing
 update' _ plugins state (QueryChanged s) =
   Transition state {query = s, results = []} $ do
-    chan <- newChan
-    mapM_ (runPlugin chan s) plugins
-    updateResults s chan
+    updateResults s $ parallely $ S.mapMaybeM (runPlugin s) $ S.fromList plugins
 update' Configuration {..} _ state (ResultAdded q x chan) =
   Transition
     state
@@ -146,7 +144,7 @@ update' Configuration {..} _ state (ResultAdded q x chan) =
     queryMatch = q == query state
     anyTriggered = any  ((== 0) . priority) newResults
     newResults = removeSame [] x
-    
+
 update' _ _ state (Activated a) = Transition state $ a $> Just Closed
 update' _ _ _ Closed = Exit
 
