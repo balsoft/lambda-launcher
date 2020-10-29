@@ -31,7 +31,6 @@ Edit `configuration` top-level binding in `src/Main.hs`. The `Configuration` typ
 | Name            | Trigger | Description                                     | Required dependencies | Optional dependencies |
 |-----------------|---------|-------------------------------------------------|-----------------------|-----------------------|
 | Command         | $       | run shell commands, with suggestions            |                       |                       |
-| Dictionary      | def     | define a word with Google Dictionary            |                       |                       |
 | Duckduckgo      | ddg     | search the web with DDG instant answers         |                       |                       |
 | Emacs           | em      | open emacs in a directory from ~/projects       | emacs                 | nix-shell             |
 | Files           | file    | list and open files                             |                       |                       |

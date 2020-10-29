@@ -1,6 +1,5 @@
 module LambdaLauncher.Plugins
   ( command
-  , dictionary
   , duckduckgo
   , emacs
   , files
@@ -16,7 +15,6 @@ module LambdaLauncher.Plugins
 where
 
 import LambdaLauncher.Plugins.Command
-import LambdaLauncher.Plugins.Dictionary
 import LambdaLauncher.Plugins.Duckduckgo
 import LambdaLauncher.Plugins.Emacs
 import LambdaLauncher.Plugins.Files

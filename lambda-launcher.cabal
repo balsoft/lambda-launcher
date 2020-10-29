@@ -36,7 +36,6 @@ executable lambda-launcher
                       , LambdaLauncher.Plugins.Files
                       , LambdaLauncher.Plugins.Google
                       , LambdaLauncher.Plugins.Command
-                      , LambdaLauncher.Plugins.Dictionary
                       , LambdaLauncher.Plugins.Emacs
                       , LambdaLauncher.Plugins.Wiki
                       , LambdaLauncher.Plugins.Stackoverflow
