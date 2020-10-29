@@ -18,9 +18,9 @@ plugins =
   , trigger command "$ "
   , trigger kill "kill "
   , triggerStrict googletranslate "tr "
-  , trigger wiki "wiki "
-  , trigger duckduckgo "ddg "
-  , trigger stackoverflow "so "
+  , triggerStrict wiki "wiki "
+  , triggerStrict duckduckgo "ddg "
+  , triggerStrict stackoverflow "so "
   ]
 
 conf :: Configuration
