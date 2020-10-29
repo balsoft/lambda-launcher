@@ -15,6 +15,7 @@ module LambdaLauncher.Main ( runApp ) where
 
 import Control.Monad (void)
 import qualified Data.Vector as Vector
+import Data.Vector (Vector)
 
 import Control.Applicative (optional)
 
@@ -30,9 +31,12 @@ import GI.Gtk
   , getEntryText
   )
 
--- import qualified GI.Gtk as Gtk
+import qualified GI.Gtk as Gtk
+import qualified GI.GObject as GI
+
 import GI.Gtk.Declarative
 import GI.Gtk.Declarative.App.Simple
+import GI.Gtk.Declarative.EventSource ( fromCancellation )
 
 import Data.Functor (($>))
 import Data.Text (Text, lines)
@@ -67,6 +71,41 @@ s `cutOffAt` i =
     then s
     else T.append (T.take (i - 3) s) "..."
 
+data SearchState = SearchState
+
+searchWidgetAutoFocus
+  :: Vector (Attribute Gtk.SearchEntry Event)
+  -> Widget Event
+searchWidgetAutoFocus customAttributes =
+  Widget
+  (CustomWidget { customWidget
+                , customCreate
+                , customPatch
+                , customSubscribe
+                , customAttributes
+                , customParams
+                }
+  )
+ where
+  customWidget = SearchEntry
+
+  customCreate _ = do
+    entry <- Gtk.new SearchEntry [  ]
+    Gtk.on entry #map $ #grabFocus entry
+    return (entry, entry)
+
+  customPatch _ _ _ = CustomKeep
+
+  customSubscribe _ _ entry cb = do
+    let fc = fromCancellation . GI.signalHandlerDisconnect entry
+
+    hSC <- Gtk.on entry #searchChanged $ cb . QueryChanged =<< getEntryText entry
+    hSS <- Gtk.on entry #stopSearch $ cb Closed
+
+    return $ fc hSC <> fc hSS
+
+  customParams = ()
+
 searchView :: Configuration ->  State -> AppView Window Event
 searchView Configuration {..} State {results} =
   bin
@@ -93,10 +132,8 @@ searchView Configuration {..} State {results} =
   where
     searchEntry =
       BoxChild defaultBoxChildProperties $
-      widget
-        SearchEntry
-        [ onM #searchChanged toQueryChangedEvent
-        , on #stopSearch Closed
+      searchWidgetAutoFocus
+        [
         ]
     buildResults res = actionToButton <$> Vector.fromList res
     actionToButton (Action r _ a) =
