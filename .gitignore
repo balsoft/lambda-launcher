@@ -3,4 +3,7 @@ dist*
 .ghc*
 .stack-work/
 src/Main.hs
+src/Main
 _darcs
+*.hi
+*.o
