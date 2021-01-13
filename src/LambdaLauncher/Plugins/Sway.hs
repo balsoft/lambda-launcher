@@ -5,6 +5,7 @@
 module LambdaLauncher.Plugins.Sway where
 
 import Data.Aeson
+import Data.Maybe (maybeToList)
 import Data.Text (Text, pack)
 import Data.Text.Encoding (encodeUtf8)
 import GHC.Generics
@@ -28,7 +29,7 @@ data Window = Window
   , wApp_id :: Maybe Text
   , wId     :: Integer
   , wPid    :: Integer
-  }
+  } deriving (Show)
 
 instance FromJSON Node
 
@@ -49,8 +50,6 @@ windowToResults Window{..} =
 sway :: Plugin
 sway s = do
   tree <- encodeUtf8 . pack <$> readProcess "swaymsg" ["-t", "get_tree"] ""
-  pure $ concat $
-    map windowToResults
-      . (\v -> F.original <$> F.filter s v "" "" wName False)
-      . findWindows
-      <$> decodeStrict tree
+  let windows = concat $ maybeToList $ findWindows <$> decodeStrict tree
+  let matchingWindows = F.original <$> F.filter s windows "" "" wName False
+  pure $ map windowToResults matchingWindows
