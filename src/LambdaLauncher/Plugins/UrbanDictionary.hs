@@ -16,12 +16,7 @@ import GHC.Generics
 data Definition = Definition
   { definition :: Text
   , word :: Text
-  , author :: Text
   , permalink :: Text
-  , defid :: Int
-  , thumbs_up :: Int
-  , thumbs_down :: Int
-  , example :: Text
   } deriving (Eq, Show, Generic)
 
 data Definitions = Definitions
