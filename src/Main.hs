@@ -22,6 +22,7 @@ plugins =
   , triggerStrict duckduckgo "ddg "
   , triggerStrict stackoverflow "so "
   , triggerStrict pass "pass "
+  , triggerStrict urbanDictionary "ub"
   ]
 
 conf :: Configuration

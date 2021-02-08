@@ -10,6 +10,7 @@ module LambdaLauncher.Plugins
   , qalc
   , stackoverflow
   , sway
+  , urbanDictionary
   , wiki
   , wmctrl
   )
@@ -26,5 +27,6 @@ import LambdaLauncher.Plugins.Pass
 import LambdaLauncher.Plugins.Qalc
 import LambdaLauncher.Plugins.Stackoverflow
 import LambdaLauncher.Plugins.Sway
+import LambdaLauncher.Plugins.UrbanDictionary
 import LambdaLauncher.Plugins.Wiki
 import LambdaLauncher.Plugins.Wmctrl
