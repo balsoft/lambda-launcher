@@ -9,9 +9,6 @@ import LambdaLauncher.Types
 
 import Control.Monad.IO.Class (liftIO)
 import Data.Aeson
-import Data.Default.Class
-import Data.Maybe (catMaybes)
-import Data.Monoid ((<>))
 import Data.Text (Text)
 import Network.HTTP.Req
 import GHC.Generics
@@ -39,11 +36,11 @@ instance FromJSON Definitions
 fetchUBDefinitions s =
   runReq defaultHttpConfig $ do
     bs <-
-      req GET (https "api.urbandictionary.com" /: "v0" /: "define") NoReqBody bsResponse $ ("term" =: s)
+      req GET (https "api.urbandictionary.com" /: "v0" /: "define") NoReqBody bsResponse ("term" =: s)
     liftIO $ return $ responseBody bs
 
 defToResult :: Definition -> LambdaLauncher.Types.Result
-defToResult (Definition {..}) = Action (word<>": "<>definition) 2 $ openUrlAction permalink
+defToResult Definition {..} = Action (word<>": "<>definition) 2 $ openUrlAction permalink
 
 urbanDictionary :: Plugin
 urbanDictionary s | s == "" = mempty

@@ -7,9 +7,7 @@
 {-# LANGUAGE OverloadedLists #-}
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE TypeApplications #-}
 
 module LambdaLauncher.Main ( runApp ) where
 
@@ -139,14 +137,14 @@ searchView Configuration {..} State {results} =
     actionToButton (Action r _ a) =
       widget
       Button
-      [ #label := ((head $ Data.Text.lines r) `cutOffAt` maxChars)
+      [ #label := (head (Data.Text.lines r) `cutOffAt` maxChars)
       , on #clicked $ Activated a
       ]
     toQueryChangedEvent :: SearchEntry -> IO Event
     toQueryChangedEvent w = QueryChanged <$> getEntryText w
 
 runPlugin :: Text -> Plugin -> IO (Maybe [Result])
-runPlugin q plugin = optional $ plugin q
+runPlugin q plugin = optional $ plugin q
 
 updateResults :: Text -> SerialT IO [Result] -> IO (Maybe Event)
 updateResults q s = fmap (uncurry $ ResultAdded q) <$> S.uncons s
@@ -164,10 +162,10 @@ update' Configuration {..} _ state (ResultAdded q x chan) =
           if anyTriggered
             then newResults
             else if queryMatch
-                   then sortOn priority $ (results state) ++ take maxItemsPerPlugin newResults
+                   then sortOn priority $ results state ++ take maxItemsPerPlugin newResults
                    else results state
       } $
-  if queryMatch && (not anyTriggered)
+  if queryMatch && not anyTriggered
     then updateResults q chan
     else return Nothing
   where

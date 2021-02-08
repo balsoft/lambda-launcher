@@ -1,16 +1,15 @@
-{-# LANGUAGE DeriveGeneric #-}
+
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module LambdaLauncher.Plugins.Pass where
 
-import System.FilePath.Posix (takeBaseName)
 import Data.Text (Text, pack)
 import Data.Text.Encoding (encodeUtf8)
 import System.Process (callProcess)
 import System.Environment (getEnv)
 import LambdaLauncher.Types
-import Control.Exception.Safe (catch, throwIO, try)
+import Control.Exception.Safe (catch, throwIO)
 import System.IO.Error (isDoesNotExistError)
 import Data.List (isSuffixOf)
 import Control.Monad (void)
@@ -19,7 +18,6 @@ import System.Directory.Tree (DirTree(..), AnchoredDirTree(..), build)
 
 import qualified Text.Fuzzy as F
 
-import qualified Data.Text as T
 
 getFilesByExtension :: String -> DirTree FilePath -> [FilePath]
 getFilesByExtension ext Dir {..} = mconcat $ fmap (getFilesByExtension ext) contents

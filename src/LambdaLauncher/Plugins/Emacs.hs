@@ -30,4 +30,4 @@ emacs :: Plugin
 emacs s = fmap emacsOpenAction
   . filter (T.isInfixOf s)
   . map T.pack
-  <$> (listDirectory =<< (++ "/projects") <$> getEnv "HOME")
+  <$> (listDirectory . (++ "/projects") =<< getEnv "HOME")

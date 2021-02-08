@@ -21,9 +21,9 @@ command query = do
     commandList <- mconcat <$> mapM listDirectory existEnvs
     let s = T.unpack query
     let cmd = head $ words s
-    let args = ' ':(unwords $ tail $ words s)
+    let args = ' ':unwords (tail $ words s)
     let commands =
-          map T.pack $ fmap (++ args) $ simpleFilter cmd $ filter (not . (=='.') . head) commandList
+          map T.pack $ fmap (++ args) $ simpleFilter cmd $ filter ((/= '.') . head) commandList
     mapM result commands
   where
     result :: Text -> IO Result

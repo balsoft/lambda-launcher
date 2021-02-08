@@ -21,7 +21,7 @@ data Process = Process
 instance Read Process where
   readsPrec _ input =
     let w = words input
-     in pure $
+     in pure
         ( Process
             (read $ w !! 0)
             (w !! 1)
@@ -31,7 +31,7 @@ instance Read Process where
         , "")
 
 listProcesses :: IO [Process]
-listProcesses = fmap read <$> drop 1 <$> lines <$> readProcess "ps" ["-x"] ""
+listProcesses = (fmap read <$> drop 1) . lines <$> readProcess "ps" ["-x"] ""
 
 killProcess :: Int -> IO ()
 killProcess pid = callProcess "kill" [show pid]
@@ -39,6 +39,6 @@ killProcess pid = callProcess "kill" [show pid]
 kill :: Plugin
 kill s =
   fmap
-    (\(Process {..}) -> Action (pack ("Kill " ++ command)) 3 $ killProcess pid) <$>
+    (\(Process {..}) -> Action (pack ("Kill " ++ command)) 3 $ killProcess pid) .
   filter (\(Process {..}) -> (unpack s) `isInfixOf` command) <$>
   listProcesses
