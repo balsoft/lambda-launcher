@@ -21,6 +21,7 @@ plugins =
   , triggerStrict wiki "wiki "
   , triggerStrict duckduckgo "ddg "
   , triggerStrict stackoverflow "so "
+  , triggerStrict pass "pass "
   ]
 
 conf :: Configuration

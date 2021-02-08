@@ -6,6 +6,7 @@ module LambdaLauncher.Plugins
   , google
   , googletranslate
   , kill
+  , pass
   , qalc
   , stackoverflow
   , sway
@@ -21,6 +22,7 @@ import LambdaLauncher.Plugins.Files
 import LambdaLauncher.Plugins.Google
 import LambdaLauncher.Plugins.GoogleTranslate
 import LambdaLauncher.Plugins.Kill
+import LambdaLauncher.Plugins.Pass
 import LambdaLauncher.Plugins.Qalc
 import LambdaLauncher.Plugins.Stackoverflow
 import LambdaLauncher.Plugins.Sway

@@ -7,7 +7,7 @@
   outputs = { self, nixpkgs }: {
     packages = builtins.mapAttrs (_: pkgs: rec {
       lambda-launcher-unwrapped =
-        pkgs.haskellPackages.callPackage ./lambda-launcher.nix { };
+        pkgs.haskellPackages.callCabal2nix "lambda-launcher" self { };
       lambda-launcher =
         pkgs.callPackage ./wrapper.nix { inherit lambda-launcher-unwrapped; };
     }) nixpkgs.legacyPackages;

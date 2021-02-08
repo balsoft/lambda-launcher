@@ -28,20 +28,21 @@ Edit `configuration` top-level binding in `src/Main.hs`. The `Configuration` typ
 `cabal new-run` works for me. If it doesn't, add an issue!
 
 ## Current list of plugins 
-| Name            | Trigger | Description                                     | Required dependencies | Optional dependencies |
-|-----------------|---------|-------------------------------------------------|-----------------------|-----------------------|
-| Command         | $       | run shell commands, with suggestions            |                       |                       |
-| Duckduckgo      | ddg     | search the web with DDG instant answers         |                       |                       |
-| Emacs           | em      | open emacs in a directory from ~/projects       | emacs                 | nix-shell             |
-| Files           | file    | list and open files                             |                       |                       |
-| Google          | g       | search some text through google's web interface |                       |                       |
-| Kill            | kill    | kill other processes                            | pkill, ps             |                       |
-| Qalc            | q       | use libqalculate to evaluate expressions        | qalc                  |                       |
-| Stackoverflow   | so      | search for questions with similar titles        |                       |                       |
-| Sway            | sw      | list and focus windows on sway                  | swaymsg               |                       |
-| Wiki            | wiki    | search english wikipedia                        |                       |                       |
-| Wmctrl          | win     | list and focus windows on X11                   | wmctrl                |                       |
-| GoogleTranslate | tr      | translate words and phrases with Google's api   |                       |                       |
+| Name            | Trigger | Description                                         | Required dependencies | Optional dependencies |
+|-----------------|---------|-----------------------------------------------------|-----------------------|-----------------------|
+| Command         | $       | run shell commands, with suggestions                |                       |                       |
+| Duckduckgo      | ddg     | search the web with DDG instant answers             |                       |                       |
+| Emacs           | em      | open emacs in a directory from ~/projects           | emacs                 | nix-shell             |
+| Files           | file    | list and open files                                 |                       |                       |
+| Google          | g       | search some text through google's web interface     |                       |                       |
+| GoogleTranslate | tr      | translate words and phrases with Google's api       |                       |                       |
+| Kill            | kill    | kill other processes                                | pkill, ps             |                       |
+| Pass            | pass    | copy passwords from password store to the clipboard | pass                  |                       |
+| Qalc            | q       | use libqalculate to evaluate expressions            | qalc                  |                       |
+| Stackoverflow   | so      | search for questions with similar titles            |                       |                       |
+| Sway            | sw      | list and focus windows on sway                      | swaymsg               |                       |
+| Wiki            | wiki    | search english wikipedia                            |                       |                       |
+| Wmctrl          | win     | list and focus windows on X11                       | wmctrl                |                       |
 
 If a plugin doesn't work, make sure you've installed the corresponding dependencies!
 
