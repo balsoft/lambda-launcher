@@ -8,7 +8,6 @@ import System.Environment (getEnv)
 import System.FilePath.Posix (splitSearchPath)
 import System.Directory (doesDirectoryExist, listDirectory)
 import Text.Fuzzy (simpleFilter)
-import Data.List (intersperse)
 import Control.Monad (filterM, void)
 import Data.Text (Text)
 

@@ -7,3 +7,4 @@ src/Main
 _darcs
 *.hi
 *.o
+.direnv
