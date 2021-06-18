@@ -60,16 +60,11 @@ data State = State
   , results :: [Result]
   }
 
-instance Eq Result where
-  a == b = shownText a == shownText b
-
 cutOffAt :: Text -> Int -> Text
 s `cutOffAt` i =
   if T.length s < i
     then s
     else T.append (T.take (i - 3) s) "..."
-
-data SearchState = SearchState
 
 searchWidgetAutoFocus
   :: Vector (Attribute Gtk.SearchEntry Event)
@@ -89,7 +84,7 @@ searchWidgetAutoFocus customAttributes =
 
   customCreate _ = do
     entry <- Gtk.new SearchEntry [  ]
-    Gtk.on entry #map $ #grabFocus entry
+    _ <- Gtk.on entry #map $ #grabFocus entry
     return (entry, entry)
 
   customPatch _ _ _ = CustomKeep
@@ -140,8 +135,6 @@ searchView Configuration {..} State {results} =
       [ #label := (head (Data.Text.lines r) `cutOffAt` maxChars)
       , on #clicked $ Activated a
       ]
-    toQueryChangedEvent :: SearchEntry -> IO Event
-    toQueryChangedEvent w = QueryChanged <$> getEntryText w
 
 runPlugin :: Text -> Plugin -> IO (Maybe [Result])
 runPlugin q plugin = optional $ plugin q

@@ -19,7 +19,7 @@ data Definition = Definition
   , permalink :: Text
   } deriving (Eq, Show, Generic)
 
-data Definitions = Definitions
+newtype Definitions = Definitions
   { list :: [Definition]
   } deriving (Eq, Show, Generic)
 

@@ -33,7 +33,7 @@
 
     devShell = builtins.mapAttrs (arch: pkgs:
       pkgs.mkShell {
-        buildInputs = [ pkgs.haskell-language-server ];
+        buildInputs = [ pkgs.haskell-language-server pkgs.cabal-install ];
         inputsFrom = [
           self.packages.${arch}.lambda-launcher-unwrapped.env
           self.packages.${arch}.lambda-launcher

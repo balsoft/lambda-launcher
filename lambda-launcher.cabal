@@ -32,18 +32,20 @@ executable lambda-launcher
   other-modules:        LambdaLauncher.Types
                       , LambdaLauncher.Main
                       , LambdaLauncher.Plugins
-                      , LambdaLauncher.Plugins.Support
-                      , LambdaLauncher.Plugins.Qalc
-                      , LambdaLauncher.Plugins.Sway
+                      , LambdaLauncher.Plugins.Command
+                      , LambdaLauncher.Plugins.Duckduckgo
+                      , LambdaLauncher.Plugins.Emacs
                       , LambdaLauncher.Plugins.Files
                       , LambdaLauncher.Plugins.Google
-                      , LambdaLauncher.Plugins.Command
-                      , LambdaLauncher.Plugins.Emacs
-                      , LambdaLauncher.Plugins.Wiki
-                      , LambdaLauncher.Plugins.Stackoverflow
-                      , LambdaLauncher.Plugins.Wmctrl
-                      , LambdaLauncher.Plugins.Duckduckgo
-                      , LambdaLauncher.Plugins.Kill
                       , LambdaLauncher.Plugins.GoogleTranslate
+                      , LambdaLauncher.Plugins.Kill
+                      , LambdaLauncher.Plugins.Pass
+                      , LambdaLauncher.Plugins.Qalc
+                      , LambdaLauncher.Plugins.Stackoverflow
+                      , LambdaLauncher.Plugins.Support
+                      , LambdaLauncher.Plugins.Sway
+                      , LambdaLauncher.Plugins.UrbanDictionary
+                      , LambdaLauncher.Plugins.Wiki
+                      , LambdaLauncher.Plugins.Wmctrl
   default-language:     Haskell2010
   ghc-options:          -threaded

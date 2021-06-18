@@ -18,7 +18,7 @@ data RelatedTopic = RelatedTopic
   , firstURL :: Maybe Text
   } deriving (Eq, Show)
 
-data DDGResponse = DDGResponse
+newtype DDGResponse = DDGResponse
   { relatedTopics :: [RelatedTopic]
   } deriving (Eq, Show)
 

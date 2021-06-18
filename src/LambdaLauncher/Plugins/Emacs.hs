@@ -3,7 +3,6 @@
 module LambdaLauncher.Plugins.Emacs where
 
 import Control.Monad (void)
-import Data.List (isInfixOf)
 import System.Directory (listDirectory)
 import System.Environment (getEnv)
 import System.Process (spawnCommand)

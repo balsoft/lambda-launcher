@@ -8,8 +8,6 @@ import LambdaLauncher.Plugins.Support
 import Control.Monad.IO.Class
 import Data.Aeson
 import Data.Maybe
-import Data.Default.Class
-import Data.Monoid ((<>))
 import Prelude hiding (words, concat)
 import Data.Text (Text, words)
 import Data.List (intersperse)

@@ -21,7 +21,7 @@ import Data.Text (Text)
 import qualified Data.Text as T
 
 
-data Response = Response
+newtype Response = Response
   { items :: [Question]
   } deriving (Show, Generic)
 

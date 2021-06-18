@@ -11,6 +11,9 @@ data Result = Action
   , action :: IO ()
   }
 
+instance Eq Result where
+  a == b = shownText a == shownText b
+
 type Plugin = Text -> IO [Result]
 
 -- Configuration!

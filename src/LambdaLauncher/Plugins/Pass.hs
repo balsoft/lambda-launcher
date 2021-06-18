@@ -1,11 +1,9 @@
-
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module LambdaLauncher.Plugins.Pass where
 
-import Data.Text (Text, pack)
-import Data.Text.Encoding (encodeUtf8)
+import Data.Text (pack)
 import System.Process (callProcess)
 import System.Environment (getEnv)
 import LambdaLauncher.Types

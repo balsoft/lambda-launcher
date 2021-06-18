@@ -19,11 +19,11 @@ import Network.HTTP.Req
 
 import qualified Data.Text as T
 
-data Response = Response
+newtype Response = Response
   { query :: Query
   } deriving (Show, Generic)
 
-data Query = Query
+newtype Query = Query
   { search :: [SearchResult]
   } deriving (Show, Generic)
 
