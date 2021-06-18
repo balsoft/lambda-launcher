@@ -35,7 +35,7 @@ secretToResults secret =
 
 pass :: Plugin
 pass s = do
-  password_store <- getEnv "PASSWORD_STORE" `catch` \e ->
+  password_store <- getEnv "PASSWORD_STORE_DIR" `catch` \e ->
     if isDoesNotExistError e
     then getEnv "HOME" <> pure "/.password-store"
     else throwIO e
