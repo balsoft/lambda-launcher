@@ -3,6 +3,12 @@
 λauncher is a GTK launcher application built with Haskell and 
 gtk-gi-declarative.
 
+## Screenshots
+
+![Search for "hello world" on duckduckgo](./screenshots/adwaita_hello_world.png)
+
+![All results for "firefox" (command launcher, calculator, window switcher)](./screenshots/black_high_contrast_firefox.png)
+
 ## Features
 
  -  Asynchronous plugin result loading
