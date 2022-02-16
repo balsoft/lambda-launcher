@@ -1,5 +1,6 @@
 module LambdaLauncher.Plugins
-  ( command
+  ( clipman
+  , command
   , duckduckgo
   , emacs
   , files
@@ -16,6 +17,7 @@ module LambdaLauncher.Plugins
   )
 where
 
+import LambdaLauncher.Plugins.Clipman
 import LambdaLauncher.Plugins.Command
 import LambdaLauncher.Plugins.Duckduckgo
 import LambdaLauncher.Plugins.Emacs

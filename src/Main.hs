@@ -23,6 +23,7 @@ plugins =
   , triggerStrict stackoverflow "so "
   , triggerStrict pass "pass "
   , triggerStrict urbanDictionary "ub"
+  , triggerStrict clipman "cp "
   ]
 
 conf :: Configuration

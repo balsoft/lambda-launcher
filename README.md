@@ -36,6 +36,7 @@ Edit `configuration` top-level binding in `src/Main.hs`. The `Configuration` typ
 ## Current list of plugins 
 | Name            | Trigger | Description                                         | Required dependencies | Optional dependencies |
 |-----------------|---------|-----------------------------------------------------|-----------------------|-----------------------|
+| Clipman         | cp      | get entries from clipman clipboard manager          | clipman               |                       |
 | Command         | $       | run shell commands, with suggestions                |                       |                       |
 | Duckduckgo      | ddg     | search the web with DDG instant answers             |                       |                       |
 | Emacs           | em      | open emacs in a directory from ~/projects           | emacs                 | nix-shell             |
