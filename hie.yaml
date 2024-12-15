@@ -1,0 +1,5 @@
+cradle:
+  bios:
+    shell: |
+      echo "-v" > $HIE_BIOS_OUTPUT
+      echo "-i $(realpath $(dirname $HIE_BIOS_ARG))/src" >> $HIE_BIOS_OUTPUT

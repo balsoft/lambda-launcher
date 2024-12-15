@@ -24,6 +24,7 @@ plugins =
   , triggerStrict pass "pass "
   , triggerStrict urbanDictionary "ub"
   , triggerStrict clipman "cp "
+  , triggerStrict pulseaudio "pa "
   ]
 
 conf :: Configuration

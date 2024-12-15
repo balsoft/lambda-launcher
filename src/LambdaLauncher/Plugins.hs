@@ -8,6 +8,7 @@ module LambdaLauncher.Plugins
   , googletranslate
   , kill
   , pass
+  , pulseaudio
   , qalc
   , stackoverflow
   , sway
@@ -26,6 +27,7 @@ import LambdaLauncher.Plugins.Google
 import LambdaLauncher.Plugins.GoogleTranslate
 import LambdaLauncher.Plugins.Kill
 import LambdaLauncher.Plugins.Pass
+import LambdaLauncher.Plugins.Pulseaudio
 import LambdaLauncher.Plugins.Qalc
 import LambdaLauncher.Plugins.Stackoverflow
 import LambdaLauncher.Plugins.Sway

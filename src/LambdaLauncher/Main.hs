@@ -165,7 +165,6 @@ update' Configuration {..} _ state (ResultAdded q x chan) =
     queryMatch = q == query state
     anyTriggered = any  ((== 0) . priority) newResults
     newResults = nub x
-
 update' _ _ state (Activated a) = Transition state $ a $> Just Closed
 update' _ _ _ Closed = Exit
 
