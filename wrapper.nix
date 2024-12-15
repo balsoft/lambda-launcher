@@ -1,5 +1,5 @@
-{ lib, makeWrapper, wrapGAppsHook, lambda-launcher-unwrapped, libqalculate, wmctrl, librsvg
-, plugins ? [ libqalculate wmctrl ] }:
+{ lib, makeWrapper, wrapGAppsHook, lambda-launcher-unwrapped, libqalculate, wmctrl, librsvg, pulseaudio
+, plugins ? [ libqalculate wmctrl pulseaudio ] }:
 lambda-launcher-unwrapped.overrideAttrs (old: {
   buildInputs = old.buildInputs ++ [ librsvg ];
   nativeBuildInputs = old.nativeBuildInputs ++ [ makeWrapper wrapGAppsHook ];
