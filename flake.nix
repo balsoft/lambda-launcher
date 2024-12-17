@@ -1,43 +1,60 @@
 {
   description = "A launcher written in Haskell";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.flake-utils.url = "github:numtide/flake-utils";
 
-  outputs = { self, nixpkgs }: {
-    packages = builtins.mapAttrs (_: pkgs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       let
-        jailbreakUnbreak = pkg:
-          pkgs.haskell.lib.doJailbreak (pkg.overrideAttrs (_: { meta = { }; }));
-      in rec {
-        lambda-launcher-unwrapped =
-          pkgs.haskellPackages.callCabal2nix "lambda-launcher" self rec {
-            gi-gtk-declarative =
-              jailbreakUnbreak pkgs.haskellPackages.gi-gtk-declarative;
-            gi-gtk-declarative-app-simple = pkgs.haskell.lib.dontCheck
-              (jailbreakUnbreak
-                (pkgs.haskellPackages.gi-gtk-declarative-app-simple.override {
-                  inherit gi-gtk-declarative;
-                }));
-          };
-        lambda-launcher =
-          pkgs.callPackage ./wrapper.nix { inherit lambda-launcher-unwrapped; };
-      }) nixpkgs.legacyPackages;
+        pkgs = nixpkgs.legacyPackages.${system};
+        jailbreakUnbreak =
+          pkg:
+          pkgs.haskell.lib.doJailbreak (
+            pkg.overrideAttrs (_: {
+              meta = { };
+            })
+          );
+        haskellPackages = pkgs.haskellPackages.extend (final: prev: {
+          gi-gtk-declarative = jailbreakUnbreak pkgs.haskellPackages.gi-gtk-declarative;
+          gi-gtk-declarative-app-simple = pkgs.haskell.lib.dontCheck (
+            jailbreakUnbreak (
+              pkgs.haskellPackages.gi-gtk-declarative-app-simple.override {
+                inherit (final) gi-gtk-declarative;
+              }
+            )
+          );
 
-    defaultPackage =
-      builtins.mapAttrs (_: pkgs: pkgs.lambda-launcher) self.packages;
+        });
+      in
+      {
+        packages = rec {
+          lambda-launcher-unwrapped = haskellPackages.callCabal2nix "lambda-launcher" self { };
+          lambda-launcher = pkgs.callPackage ./wrapper.nix { inherit lambda-launcher-unwrapped; };
+          default = lambda-launcher;
+        };
 
-    defaultApp = builtins.mapAttrs (_: pkg: {
-      type = "app";
-      program = "${pkg}/bin/lambda-launcher";
-    }) self.defaultPackage;
+        apps.default = {
+          type = "app";
+          program = "${self.packages.${system}.default}/bin/lambda-launcher";
+        };
 
-    devShell = builtins.mapAttrs (arch: pkgs:
-      pkgs.mkShell {
-        buildInputs = [ pkgs.haskell-language-server pkgs.cabal-install ];
-        inputsFrom = [
-          self.packages.${arch}.lambda-launcher-unwrapped.env
-          self.packages.${arch}.lambda-launcher
-        ];
-      }) nixpkgs.legacyPackages;
-  };
+        devShells.default = pkgs.mkShell {
+          buildInputs = [
+            haskellPackages.haskell-language-server
+            haskellPackages.cabal-install
+          ];
+          inputsFrom = [
+            self.packages.${system}.lambda-launcher-unwrapped.env
+            self.packages.${system}.lambda-launcher
+          ];
+        };
+      }
+    );
 }

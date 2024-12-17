@@ -5,29 +5,29 @@ cabal-version:       >=1.10
 
 executable lambda-launcher
   main-is:              Main.hs
-  build-depends:        base == 4.*
-                      , process == 1.*
-                      , directory == 1.*
-                      , async == 2.*
-                      , bytestring== 0.10.*
-                      , gi-gobject == 2.*
-                      , gi-glib == 2.*
-                      , gi-gtk == 3.*
-                      , gi-gtk-declarative == 0.*
-                      , gi-gtk-declarative-app-simple == 0.*
-                      , gi-gdk == 3.*
-                      , haskell-gi == 0.*
-                      , haskell-gi-base == 0.*
-                      , text == 1.*
-                      , vector == 0.*
-                      , aeson == 1.*
-                      , filepath == 1.*
+  build-depends:        base
+                      , process
+                      , directory
+                      , async
+                      , bytestring
+                      , gi-gobject
+                      , gi-glib
+                      , gi-gtk
+                      , gi-gtk-declarative
+                      , gi-gtk-declarative-app-simple
+                      , gi-gdk
+                      , haskell-gi
+                      , haskell-gi-base
+                      , text
+                      , vector
+                      , aeson
+                      , filepath
                       , req
-                      , data-default-class == 0.*
-                      , fuzzy == 0.1.*
+                      , data-default-class
+                      , fuzzy
                       , streamly
-                      , safe-exceptions == 0.1.*
-                      , directory-tree == 0.12.*
+                      , safe-exceptions
+                      , directory-tree
   hs-source-dirs:       src
   other-modules:        LambdaLauncher.Types
                       , LambdaLauncher.Main

@@ -41,7 +41,7 @@ findWindows :: Node -> [Window]
 findWindows (Node (Just name) nApp_id nId (Just pid) _) =
   [Window name nApp_id nId pid]
 -- Otherwise, look at node's children recursively
-findWindows node = concat (mconcat . map findWindows <$> nodes node)
+findWindows node = concatMap (mconcat . map findWindows) (nodes node)
 
 windowToResults :: Window -> LambdaLauncher.Types.Result
 windowToResults Window{..} =
