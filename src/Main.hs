@@ -10,7 +10,6 @@ import LambdaLauncher.Plugins.Support (trigger, triggerStrict)
 plugins :: [Plugin]
 plugins =
   [ trigger qalc "q "
-  , trigger emacs "em "
   , triggerStrict google "g "
   , trigger sway "sw "
   , trigger wmctrl "win "
@@ -31,9 +30,10 @@ conf :: Configuration
 conf = Configuration
   { width = 500
   , maxHeight = 300
-  , maxChars = 60
-  , showBorder = False 
-  , maxItemsPerPlugin = 4 }
+  , maxChars = 46
+  , fontSize = 16
+  , showBorder = False
+  , maxItemsPerPlugin = 8 }
 
 main :: IO ()
 main = runApp conf plugins

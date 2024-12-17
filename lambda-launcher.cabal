@@ -10,6 +10,7 @@ executable lambda-launcher
                       , directory
                       , async
                       , bytestring
+                      , utf8-string
                       , gi-gobject
                       , gi-glib
                       , gi-gtk

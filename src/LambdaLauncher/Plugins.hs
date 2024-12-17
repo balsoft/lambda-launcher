@@ -2,7 +2,6 @@ module LambdaLauncher.Plugins
   ( clipman
   , command
   , duckduckgo
-  , emacs
   , files
   , google
   , googletranslate
@@ -21,7 +20,6 @@ where
 import LambdaLauncher.Plugins.Clipman
 import LambdaLauncher.Plugins.Command
 import LambdaLauncher.Plugins.Duckduckgo
-import LambdaLauncher.Plugins.Emacs
 import LambdaLauncher.Plugins.Files
 import LambdaLauncher.Plugins.Google
 import LambdaLauncher.Plugins.GoogleTranslate

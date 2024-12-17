@@ -11,16 +11,16 @@
 
 module LambdaLauncher.Main (runApp) where
 
-import System.Environment (getArgs)
 import Control.Applicative (optional)
 import Control.Monad (void)
 import Data.Functor (($>))
 import Data.List (genericLength, nub, sortOn)
 import Data.Text (Text, lines)
-import qualified Data.Text as T
+import Data.Text qualified as T
 import Data.Vector (Vector)
-import qualified Data.Vector as Vector
-import qualified GI.GObject as GI
+import Data.Vector qualified as Vector
+import GI.GObject qualified as GI
+import GI.Gdk qualified as Gdk
 import GI.Gtk
   ( Box (..),
     Button (..),
@@ -32,13 +32,15 @@ import GI.Gtk
     WindowPosition (..),
     getEntryText,
   )
-import qualified GI.Gtk as Gtk
+import GI.Gtk qualified as Gtk
 import GI.Gtk.Declarative
 import GI.Gtk.Declarative.App.Simple
 import GI.Gtk.Declarative.EventSource (fromCancellation)
 import LambdaLauncher.Types
-import qualified Streamly.Data.Stream.Prelude as S
 import Streamly.Data.Stream (Stream)
+import Streamly.Data.Stream.Prelude qualified as S
+import System.Environment (getArgs)
+import qualified Data.ByteString.UTF8 as BS
 
 data Event
   = QueryChanged Text
@@ -58,7 +60,7 @@ cutOffAt :: Text -> Int -> Text
 s `cutOffAt` i =
   if T.length s < i
     then s
-    else T.append (T.take (i - 3) s) "..."
+    else T.append (T.take (i - 1) s) "…"
 
 searchWidgetAutoFocus ::
   Vector (Attribute Gtk.SearchEntry Event) ->
@@ -115,8 +117,8 @@ searchView Configuration {..} State {results} =
       [ #hscrollbarPolicy := PolicyTypeNever,
         #vscrollbarPolicy := PolicyTypeAlways
       ]
-      $ container Box [#orientation := OrientationVertical] $
-        searchEntry `Vector.cons` buildResults results
+    $ container Box [#orientation := OrientationVertical]
+    $ searchEntry `Vector.cons` buildResults results
   where
     searchEntry =
       BoxChild defaultBoxChildProperties $
@@ -165,7 +167,14 @@ update' _ _ _ Closed = Exit
 
 runApp :: Configuration -> [Plugin] -> IO ()
 runApp c p = do
-  args <- getArgs
+  void $ Gtk.init Nothing
+  screen <- maybe (fail "No screen?!") return =<< Gdk.screenGetDefault
+  cssProvider <- Gtk.cssProviderNew
+  Gtk.cssProviderLoadFromData cssProvider ("* { font-size: " <> BS.fromString (show (fontSize c)) <> "px; font-family: \"monospace\"; }")
+  Gtk.styleContextAddProviderForScreen
+    screen
+    cssProvider
+    (fromIntegral Gtk.STYLE_PROVIDER_PRIORITY_USER)
   void $
     run
       App
