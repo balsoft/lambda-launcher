@@ -27,8 +27,11 @@ executable lambda-launcher
                       , data-default-class
                       , fuzzy
                       , streamly
+                      , streamly-core
                       , safe-exceptions
                       , directory-tree
+                      , parsec
+                      , containers
   hs-source-dirs:       src
   other-modules:        LambdaLauncher.Types
                       , LambdaLauncher.Main
@@ -36,7 +39,6 @@ executable lambda-launcher
                       , LambdaLauncher.Plugins.Clipman
                       , LambdaLauncher.Plugins.Command
                       , LambdaLauncher.Plugins.Duckduckgo
-                      , LambdaLauncher.Plugins.Emacs
                       , LambdaLauncher.Plugins.Files
                       , LambdaLauncher.Plugins.Google
                       , LambdaLauncher.Plugins.GoogleTranslate

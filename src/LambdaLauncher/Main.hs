@@ -16,11 +16,11 @@ import Control.Monad (void)
 import Data.Functor (($>))
 import Data.List (genericLength, nub, sortOn)
 import Data.Text (Text, lines)
-import Data.Text qualified as T
+import qualified Data.Text as T
 import Data.Vector (Vector)
-import Data.Vector qualified as Vector
-import GI.GObject qualified as GI
-import GI.Gdk qualified as Gdk
+import qualified Data.Vector as Vector
+import qualified GI.GObject as GI
+import qualified GI.Gdk as Gdk
 import GI.Gtk
   ( Box (..),
     Button (..),
@@ -32,13 +32,13 @@ import GI.Gtk
     WindowPosition (..),
     getEntryText,
   )
-import GI.Gtk qualified as Gtk
+import qualified GI.Gtk as Gtk
 import GI.Gtk.Declarative
 import GI.Gtk.Declarative.App.Simple
 import GI.Gtk.Declarative.EventSource (fromCancellation)
 import LambdaLauncher.Types
 import Streamly.Data.Stream (Stream)
-import Streamly.Data.Stream.Prelude qualified as S
+import qualified Streamly.Data.Stream.Prelude as S
 import System.Environment (getArgs)
 import qualified Data.ByteString.UTF8 as BS
 
