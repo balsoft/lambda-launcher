@@ -28,9 +28,9 @@ plugins =
 
 conf :: Configuration
 conf = Configuration
-  { width = 500
+  { width = 700
   , maxHeight = 300
-  , maxChars = 46
+  , maxChars = 66
   , fontSize = 16
   , showBorder = False
   , maxItemsPerPlugin = 8 }
