@@ -36,7 +36,7 @@ executable lambda-launcher
   other-modules:        LambdaLauncher.Types
                       , LambdaLauncher.Main
                       , LambdaLauncher.Plugins
-                      , LambdaLauncher.Plugins.Clipman
+                      , LambdaLauncher.Plugins.Cliphist
                       , LambdaLauncher.Plugins.Command
                       , LambdaLauncher.Plugins.Duckduckgo
                       , LambdaLauncher.Plugins.Files

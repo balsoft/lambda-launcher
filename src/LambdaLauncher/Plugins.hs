@@ -1,5 +1,5 @@
 module LambdaLauncher.Plugins
-  ( clipman
+  ( cliphist
   , command
   , duckduckgo
   , files
@@ -17,7 +17,7 @@ module LambdaLauncher.Plugins
   )
 where
 
-import LambdaLauncher.Plugins.Clipman
+import LambdaLauncher.Plugins.Cliphist
 import LambdaLauncher.Plugins.Command
 import LambdaLauncher.Plugins.Duckduckgo
 import LambdaLauncher.Plugins.Files
